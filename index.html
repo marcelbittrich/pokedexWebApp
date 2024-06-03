@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./Meisterball_Traumwelt.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <title>Marcel's Pokedex</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="lucky-font">Pokedex</h1>
+      <input type="search" placeholder="Search for favourite Pokemon" />
+    </header>
+    <main>
+      <aside class="filter">
+        Filter
+        <input type="range" min="1" max="2000" />
+        <input type="button" value="Request" />
+      </aside>
+      <section id="pokemon-collection"></section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="source.js"></script>
+  </body>
+</html>
