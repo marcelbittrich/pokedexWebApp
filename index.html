@@ -20,12 +20,38 @@
     </header>
     <main>
       <aside class="filter">
-        Filter
+        <h2 class="lucky-font">Data</h2>
         <input type="range" min="1" max="2000" />
         <input type="button" value="Request" />
+        <h2 class="lucky-font">Filter</h2>
+        <h3 class="lucky-font">Types</h3>
+        <h3 class="lucky-font">Data</h3>
       </aside>
       <section id="pokemon-collection"></section>
     </main>
+    <div id="modal">
+      <section id="modal-card">
+        <img src="./Subtract.svg" width="715" height="400" />
+        <div class="content">
+          <div class="head">
+            <figure>
+              <img
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+              />
+            </figure>
+            <div class="main-info">
+              <div class="grid-element">Name</div>
+              <div id="modal-name" class="grid-element">NAMEVALUE</div>
+              <div class="grid-element">Types</div>
+              <div id="modal-types" class="grid-element">TYPEVALUE</div>
+              <div class="grid-element">Weight</div>
+              <div id="modal-weight" class="grid-element">WEIGHTVALUE</div>
+            </div>
+          </div>
+          <div class="side-info">Side Info</div>
+        </div>
+      </section>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="source.js"></script>
   </body>

@@ -1,15 +1,23 @@
 console.log("hello from the code");
 
-const createPokemonCard = (name, imageUrl) => {
-  let $pokemonCard = $("<div>").addClass("pokemon-card");
+const NUM_OF_POKEMON = 100;
+
+function firstLetterToUpper(name) {
+  return name[0].toUpperCase() + name.slice(1);
+}
+
+const createPokemonCard = (id, name, imageUrl) => {
+  let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
+  let $shadowCard = $("<div>").addClass("shadow-card").appendTo($cardWrapper);
+  let $pokemonCard = $("<div>").addClass("pokemon-card").appendTo($cardWrapper);
 
   let $picture = $("<figure>")
     .append(`<img src=${imageUrl}>`)
     .appendTo($pokemonCard);
 
-  name = name[0].toUpperCase() + name.slice(1);
-  let $name = $("<p>").text(name).appendTo($pokemonCard);
-  return $pokemonCard;
+  name = firstLetterToUpper(name);
+  let $name = $("<p>").addClass("lucky-font").text(name).appendTo($pokemonCard);
+  return $cardWrapper;
 };
 
 async function getAllPokemon(num) {
@@ -43,12 +51,42 @@ async function getAllPokemon(num) {
   }
 }
 
-const countLimit = 100;
-getAllPokemon(countLimit).then((pokemonObjects) => {
-  console.log(pokemonObjects);
-  pokemonObjects.forEach((pokemon) => {
+function updateModalCard(pokemon) {
+  const imageUrl = pokemon.sprites.front_default;
+  $("#modal-card .content img").attr("src", imageUrl);
+
+  $("#modal-name").text(firstLetterToUpper(pokemon.name));
+
+  const types = pokemon.types
+    .map((element) => {
+      return firstLetterToUpper(element.type.name);
+    })
+    .join(", ");
+  $("#modal-types").text(firstLetterToUpper(types));
+
+  $("#modal-weight").text(pokemon.weight);
+}
+
+getAllPokemon(NUM_OF_POKEMON).then((pokemonObjects) => {
+  for (let i = 0; i < pokemonObjects.length; i++) {
+    const pokemon = pokemonObjects[i];
     $("#pokemon-collection").append(
-      createPokemonCard(pokemon.name, pokemon.sprites.front_default)
+      createPokemonCard(i, pokemon.name, pokemon.sprites.front_default)
     );
+  }
+
+  $("div.card-wrapper").on("click", function () {
+    const pokemonIndex = $(this).attr("id").split("-")[1];
+    updateModalCard(pokemonObjects[pokemonIndex]);
+    changeVisiblity($("#modal"), true);
   });
+});
+
+function changeVisiblity($element, bool) {
+  const displayValue = bool ? "block" : "none";
+  $element.css("display", displayValue);
+}
+
+$("#modal").on("click", function () {
+  changeVisiblity($("#modal"), false);
 });
