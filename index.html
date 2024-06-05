@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./Meisterball_Traumwelt.png" />
+    <link rel="icon" type="image/png" href="img/Meisterball_Traumwelt.png" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,23 +15,37 @@
   </head>
   <body>
     <header>
+      <div id="menu-button">
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+      </div>
       <h1 class="lucky-font">Pokedex</h1>
       <input type="search" placeholder="Search for favourite Pokemon" />
     </header>
     <main>
-      <aside class="filter">
-        <h2 class="lucky-font">Data</h2>
-        <input type="range" min="1" max="2000" />
-        <input type="button" value="Request" />
-        <h2 class="lucky-font">Filter</h2>
-        <h3 class="lucky-font">Types</h3>
-        <h3 class="lucky-font">Data</h3>
+      <aside id="sidebar">
+        <section class="content">
+          <h2 class="lucky-font">Data</h2>
+          <input
+            id="requestSlider"
+            class="slider"
+            type="range"
+            min="1"
+            max="2000"
+          />
+          <p id="sliderValueDisplay">9999</p>
+          <input id="requestButton" type="button" value="Request" />
+          <h2 class="lucky-font">Filter</h2>
+          <h3 class="lucky-font">Types</h3>
+          <h3 class="lucky-font">Data</h3>
+        </section>
       </aside>
       <section id="pokemon-collection"></section>
     </main>
     <div id="modal">
       <section id="modal-card">
-        <img src="./Subtract.svg" width="715" height="400" />
+        <img src="img/Subtract.svg" width="715" height="400" />
         <div class="content">
           <div class="head">
             <figure>
@@ -53,6 +67,6 @@
       </section>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="source.js"></script>
+    <script type="module" src="source/source.js"></script>
   </body>
 </html>

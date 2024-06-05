@@ -44,51 +44,84 @@ body {
 }
 
 header {
-  height: 40px;
+  height: fit-content;
   display: flex;
   flex-direction: row;
-  gap: 80px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
   background-color: #fdd751;
   padding: 10px;
+  z-index: 4;
+}
+
+header #menu-button {
+  margin: 2px;
+  background-color: lightgrey;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header #menu-button:hover {
+  margin: 0;
+  border: 2px solid darkgray;
+}
+
+header #menu-button .menu-line {
+  border-radius: 2px;
+  height: 4px;
+  background-color: darkgrey;
+  margin: 2px 4px 2px 4px;
 }
 
 header h1 {
   color: rgb(50, 50, 50);
   position: relative;
-  flex: 0;
 }
 
 header input {
   padding: 0 10px 0 10px;
   border: 0px;
   border-radius: 5px;
+  height: 40px;
   flex: 1;
 }
 
 main {
-  display: flex;
-  flex-direction: row;
-  height: fit-content;
-  height: calc(100% - 60px);
+  flex: 1;
+  overflow-y: scroll;
+  background-color: antiquewhite;
 }
 
-main .filter {
-  min-width: 200px;
+main #sidebar {
+  padding-top: 80px;
+  position: fixed;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
   resize: horizontal;
   background-color: orange;
+  transition: width 0.5s;
+}
+
+main #sidebar .content {
   padding: 10px;
 }
 
 main #pokemon-collection {
-  flex: 1;
-  overflow: scroll;
-  background-color: antiquewhite;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
   padding: 10px;
   gap: 10px;
+  transition: margin-left 0.5s;
 }
 
 .card-wrapper {

@@ -1,10 +1,4 @@
-console.log("hello from the code");
-
-const NUM_OF_POKEMON = 100;
-
-function firstLetterToUpper(name) {
-  return name[0].toUpperCase() + name.slice(1);
-}
+import { firstLetterToUpper } from "./utils.js";
 
 const createPokemonCard = (id, name, imageUrl) => {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
@@ -22,7 +16,7 @@ const createPokemonCard = (id, name, imageUrl) => {
 
 async function getAllPokemon(num) {
   try {
-    url = `https://pokeapi.co/api/v2/pokemon?limit=${num}&offset=0`;
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${num}&offset=0`;
     let response = await window.fetch(url);
     let data = await response.json();
 
@@ -67,7 +61,9 @@ function updateModalCard(pokemon) {
   $("#modal-weight").text(pokemon.weight);
 }
 
-getAllPokemon(NUM_OF_POKEMON).then((pokemonObjects) => {
+async function updatePokemonCards(numberOfPokemon) {
+  let pokemonObjects = await getAllPokemon(numberOfPokemon);
+  $("#pokemon-collection").empty();
   for (let i = 0; i < pokemonObjects.length; i++) {
     const pokemon = pokemonObjects[i];
     $("#pokemon-collection").append(
@@ -80,8 +76,9 @@ getAllPokemon(NUM_OF_POKEMON).then((pokemonObjects) => {
     updateModalCard(pokemonObjects[pokemonIndex]);
     changeVisiblity($("#modal"), true);
   });
-});
+}
 
+// Modal
 function changeVisiblity($element, bool) {
   const displayValue = bool ? "block" : "none";
   $element.css("display", displayValue);
@@ -90,3 +87,5 @@ function changeVisiblity($element, bool) {
 $("#modal").on("click", function () {
   changeVisiblity($("#modal"), false);
 });
+
+export { updatePokemonCards };
