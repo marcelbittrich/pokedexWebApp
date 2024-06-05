@@ -62,8 +62,12 @@ function updateModalCard(pokemon) {
 }
 
 async function updatePokemonCards(numberOfPokemon) {
-  let pokemonObjects = await getAllPokemon(numberOfPokemon);
   $("#pokemon-collection").empty();
+
+  $("<div>").addClass("loading").prependTo($("body main"));
+  let pokemonObjects = await getAllPokemon(numberOfPokemon);
+  $("main .loading").remove();
+
   for (let i = 0; i < pokemonObjects.length; i++) {
     const pokemon = pokemonObjects[i];
     $("#pokemon-collection").append(
