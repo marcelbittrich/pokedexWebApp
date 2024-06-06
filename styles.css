@@ -18,6 +18,11 @@ figure {
   padding: 0;
 }
 
+body h3 {
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
 .lucky-font {
   font-family: "Luckiest Guy", cursive;
   font-weight: 400;
@@ -112,6 +117,23 @@ main #sidebar {
 
 main #sidebar .content {
   padding: 10px;
+}
+
+main #sidebar .content #tag-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 200px;
+}
+
+.type-tag {
+  font-size: 16px;
+  color: white;
+  background-color: gray;
+  padding: 4px;
+  border-radius: 3px;
 }
 
 main #pokemon-collection {
@@ -235,6 +257,13 @@ main #pokemon-collection {
   width: 200px;
   height: 48px;
   font-size: 22px;
+}
+
+#modal-card #modal-types {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 #modal-card .content .side-info {

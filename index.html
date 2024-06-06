@@ -21,7 +21,12 @@
         <div class="menu-line"></div>
       </div>
       <h1 class="lucky-font">Pokedex</h1>
-      <input type="search" placeholder="Search for favourite Pokemon" />
+      <input
+        id="pokeSearch"
+        type="search"
+        placeholder="Search for favourite Pokemon"
+        incremental
+      />
     </header>
     <main>
       <aside id="sidebar">
@@ -38,6 +43,7 @@
           <input id="requestButton" type="button" value="Request" />
           <h2 class="lucky-font">Filter</h2>
           <h3 class="lucky-font">Types</h3>
+          <div id="tag-wrapper"></div>
           <h3 class="lucky-font">Data</h3>
         </section>
       </aside>
@@ -58,7 +64,7 @@
               <div class="grid-element">Name</div>
               <div id="modal-name" class="grid-element">NAMEVALUE</div>
               <div class="grid-element">Types</div>
-              <div id="modal-types" class="grid-element">TYPEVALUE</div>
+              <div id="modal-types" class="grid-element"></div>
               <div class="grid-element">Weight</div>
               <div id="modal-weight" class="grid-element">WEIGHTVALUE</div>
             </div>

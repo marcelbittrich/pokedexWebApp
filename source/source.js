@@ -1,9 +1,14 @@
 console.log("hello from the code");
 import { updatePokemonCards } from "./pokedata.js";
+import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
 
-updatePokemonCards(151);
+// Globals
+const initialPokeCount = 151;
 
-// Sidebar
+// Initial site data
+updatePokemonCards(initialPokeCount);
+
+// Adjust sidebar padding-top on open
 $("#menu-button").on("click", function () {
   const sidebarWidth = 250 + "px";
   if ($("#sidebar").css("width") === "0px") {
@@ -18,7 +23,7 @@ $("#menu-button").on("click", function () {
   }
 });
 
-// Slider
+// Setup slider and display
 const requestSlider = document.getElementById("requestSlider");
 const sliderValueDisplay = document.getElementById("sliderValueDisplay");
 sliderValueDisplay.innerHTML = requestSlider.value;
@@ -27,7 +32,7 @@ requestSlider.oninput = function () {
   sliderValueDisplay.innerHTML = this.value;
 };
 
-// Requests
+// Setup requests
 const requestButtonElement = document.getElementById("requestButton");
 console.log(requestButtonElement);
 
@@ -46,3 +51,19 @@ async function requestUpdate(numberOfPokemon) {
 requestButtonElement.onclick = function () {
   requestUpdate(requestSlider.value);
 };
+
+$("#pokeSearch").on("search", function () {
+  if (this.value.length > 2) {
+    console.log(this.value);
+  }
+});
+
+// Create type tags in sidebar
+function populateSidebarType(types) {
+  types.forEach((type) => {
+    const $typeTag = createPokeTypeTag(type.name, type.color);
+    $("#tag-wrapper").append($typeTag);
+  });
+}
+
+populateSidebarType(pokeTypes);

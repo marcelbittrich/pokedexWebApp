@@ -1,4 +1,5 @@
 import { firstLetterToUpper } from "./utils.js";
+import { createPokeTypeTagByName } from "./poketypes.js";
 
 const createPokemonCard = (id, name, imageUrl) => {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
@@ -51,12 +52,14 @@ function updateModalCard(pokemon) {
 
   $("#modal-name").text(firstLetterToUpper(pokemon.name));
 
-  const types = pokemon.types
-    .map((element) => {
-      return firstLetterToUpper(element.type.name);
+  $("#modal-types").empty();
+  const $typeElementArray = pokemon.types
+    .map((typeSlot) => {
+      return createPokeTypeTagByName(typeSlot.type.name);
     })
-    .join(", ");
-  $("#modal-types").text(firstLetterToUpper(types));
+    .forEach((element) => {
+      element.appendTo($("#modal-types"));
+    });
 
   $("#modal-weight").text(pokemon.weight);
 }
