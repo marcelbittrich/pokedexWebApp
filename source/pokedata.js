@@ -1,6 +1,8 @@
 import { firstLetterToUpper } from "./utils.js";
 import { createPokeTypeTagByName } from "./poketypes.js";
 
+let pokemonObjects = [];
+
 const createPokemonCard = (id, name, imageUrl) => {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
   let $shadowCard = $("<div>").addClass("shadow-card").appendTo($cardWrapper);
@@ -15,9 +17,9 @@ const createPokemonCard = (id, name, imageUrl) => {
   return $cardWrapper;
 };
 
-async function getAllPokemon(num) {
+async function fetchData(numOfPokemon) {
   try {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${num}&offset=0`;
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${numOfPokemon}&offset=0`;
     let response = await window.fetch(url);
     let data = await response.json();
 
@@ -64,12 +66,8 @@ function updateModalCard(pokemon) {
   $("#modal-weight").text(pokemon.weight);
 }
 
-async function updatePokemonCards(numberOfPokemon) {
+async function updatePokemonCards(pokemonObjects) {
   $("#pokemon-collection").empty();
-
-  $("<div>").addClass("loading").prependTo($("body main"));
-  let pokemonObjects = await getAllPokemon(numberOfPokemon);
-  $("main .loading").remove();
 
   for (let i = 0; i < pokemonObjects.length; i++) {
     const pokemon = pokemonObjects[i];
@@ -85,6 +83,16 @@ async function updatePokemonCards(numberOfPokemon) {
   });
 }
 
+async function getNewPokemonDataAndUpdateCards(numOfPokemon) {
+  $("#pokemon-collection").empty();
+
+  $("<div>").addClass("loading").prependTo($("body main"));
+  pokemonObjects = await fetchData(numOfPokemon);
+  $("main .loading").remove();
+
+  await updatePokemonCards(pokemonObjects);
+}
+
 // Modal
 function changeVisiblity($element, bool) {
   const displayValue = bool ? "block" : "none";
@@ -95,4 +103,4 @@ $("#modal").on("click", function () {
   changeVisiblity($("#modal"), false);
 });
 
-export { updatePokemonCards };
+export { getNewPokemonDataAndUpdateCards, updatePokemonCards, pokemonObjects };

@@ -30,9 +30,7 @@ function createPokeTypeTag(name, color) {
 
 function createPokeTypeTagByName(name) {
   const color = pokeTypes.find((type) => type.name === name).color;
-
-  console.log(color);
-  return createPokeTypeTag(name, color);
+  return color ? createPokeTypeTag(name, color) : null;
 }
 
 export { pokeTypes, createPokeTypeTag, createPokeTypeTagByName };

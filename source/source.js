@@ -1,12 +1,17 @@
 console.log("hello from the code");
-import { updatePokemonCards } from "./pokedata.js";
+
+import {
+  getNewPokemonDataAndUpdateCards,
+  updatePokemonCards,
+  pokemonObjects,
+} from "./pokedata.js";
 import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
 
 // Globals
 const initialPokeCount = 151;
 
 // Initial site data
-updatePokemonCards(initialPokeCount);
+getNewPokemonDataAndUpdateCards(initialPokeCount);
 
 // Adjust sidebar padding-top on open
 $("#menu-button").on("click", function () {
@@ -34,7 +39,6 @@ requestSlider.oninput = function () {
 
 // Setup requests
 const requestButtonElement = document.getElementById("requestButton");
-console.log(requestButtonElement);
 
 let isAllowedToRequest = true;
 
@@ -43,7 +47,7 @@ async function requestUpdate(numberOfPokemon) {
   if (!isAllowedToRequest) return;
   console.log("request send");
   isAllowedToRequest = false;
-  await updatePokemonCards(numberOfPokemon);
+  await getNewPokemonDataAndUpdateCards(numberOfPokemon);
   isAllowedToRequest = true;
   console.log("request returned");
 }
@@ -51,12 +55,6 @@ async function requestUpdate(numberOfPokemon) {
 requestButtonElement.onclick = function () {
   requestUpdate(requestSlider.value);
 };
-
-$("#pokeSearch").on("search", function () {
-  if (this.value.length > 2) {
-    console.log(this.value);
-  }
-});
 
 // Create type tags in sidebar
 function populateSidebarType(types) {
@@ -67,3 +65,34 @@ function populateSidebarType(types) {
 }
 
 populateSidebarType(pokeTypes);
+
+// Search
+const fuseOptions = {
+  // isCaseSensitive: false,
+  includeScore: true,
+  // shouldSort: true,
+  // includeMatches: false,
+  // findAllMatches: false,
+  minMatchCharLength: 2,
+  // location: 0,
+  threshold: 0.19,
+  // distance: 100,
+  // useExtendedSearch: false,
+  // ignoreLocation: false,
+  // ignoreFieldNorm: false,
+  // fieldNormWeight: 1,
+  keys: ["name", "types.type.name"],
+};
+
+$("#pokeSearch").on("search", function () {
+  // Only search with 3 characters or more,
+  // show everything when search is cleared.
+  if (this.value.length > 2) {
+    const fuse = new Fuse(pokemonObjects, fuseOptions);
+    let result = fuse.search(this.value);
+    result = result.map((element) => element.item);
+    updatePokemonCards(result);
+  } else if (this.value.length === 0) {
+    updatePokemonCards(pokemonObjects);
+  }
+});

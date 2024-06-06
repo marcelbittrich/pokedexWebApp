@@ -18,6 +18,11 @@ figure {
   padding: 0;
 }
 
+body h2 {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
 body h3 {
   padding-top: 15px;
   padding-bottom: 5px;
