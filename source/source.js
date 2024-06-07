@@ -88,6 +88,7 @@ $("#pokeSearch").on("search", function () {
   // Only search with 3 characters or more,
   // show everything when search is cleared.
   if (this.value.length > 2) {
+    console.log(pokemonObjects);
     const fuse = new Fuse(pokemonObjects, fuseOptions);
     let result = fuse.search(this.value);
     result = result.map((element) => element.item);

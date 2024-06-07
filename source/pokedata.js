@@ -80,6 +80,12 @@ async function updatePokemonCards(pokemonObjects) {
     const pokemonIndex = $(this).attr("id").split("-")[1];
     updateModalCard(pokemonObjects[pokemonIndex]);
     changeVisiblity($("#modal"), true);
+
+    setTimeout(() => {
+      var battleCry = new Audio(pokemonObjects[pokemonIndex].cries.latest);
+      battleCry.volume = 0.01;
+      battleCry.play();
+    }, 100);
   });
 }
 
