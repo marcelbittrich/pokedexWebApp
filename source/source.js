@@ -229,26 +229,29 @@ $("#noneTypesButton").on("click", function () {
 });
 
 /// Search input field
-$("#pokeSearch").on("search", function () {
+let debounceTimer; // prevents too many search events
+$("#pokeSearch").on("input", function () {
   // Only search with 3 characters or more,
   // show everything when search is cleared.
 
+  clearTimeout(debounceTimer);
   currentSearchInput = this.value;
 
-  if (currentSearchInput.length > 2) {
-    currentSearchInput = this.value;
-    const objects = searchWithFilters(
-      currentSearchInput,
-      selectedFilterTypes,
-      pokemonObjects
-    );
-    updatePokemonCards(objects);
-  } else if (currentSearchInput.length === 0) {
-    const objects = searchWithFilters(
-      currentSearchInput,
-      selectedFilterTypes,
-      pokemonObjects
-    );
-    updatePokemonCards(objects);
-  }
+  debounceTimer = setTimeout(() => {
+    if (currentSearchInput.length > 2) {
+      const objects = searchWithFilters(
+        currentSearchInput,
+        selectedFilterTypes,
+        pokemonObjects
+      );
+      updatePokemonCards(objects);
+    } else if (currentSearchInput.length === 0) {
+      const objects = searchWithFilters(
+        currentSearchInput,
+        selectedFilterTypes,
+        pokemonObjects
+      );
+      updatePokemonCards(objects);
+    }
+  }, 300);
 });
