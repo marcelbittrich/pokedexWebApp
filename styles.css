@@ -95,6 +95,7 @@ header h1 {
 
 header input {
   padding: 0 10px 0 10px;
+  font-size: 16px;
   border: 0px;
   border-radius: 5px;
   height: 40px;

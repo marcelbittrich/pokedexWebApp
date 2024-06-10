@@ -86,7 +86,6 @@ async function updatePokemonCards(pokemonObjects) {
     setTimeout(() => {
       var battleCry = new Audio(pokemonObjects[pokemonIndex].cries.latest);
       battleCry.volume = masterVolume / 2;
-      console.log(battleCry.volume);
       battleCry.play();
     }, 100);
   });
