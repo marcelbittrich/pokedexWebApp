@@ -4,14 +4,19 @@ import {
   getNewPokemonDataAndUpdateCards,
   updatePokemonCards,
   pokemonObjects,
+  maxPokeCount,
 } from "./pokedata.js";
 import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
 
 // Globals
-const initialPokeCount = 151;
+const INITIAL_POKE_COUNT = 151;
 
 // Initial site data
-getNewPokemonDataAndUpdateCards(initialPokeCount);
+async function initSide() {
+  await getNewPokemonDataAndUpdateCards(INITIAL_POKE_COUNT);
+  setRequestSliderMax();
+}
+initSide();
 
 // Adjust sidebar padding-top on open
 $("#menu-button").on("click", function () {
@@ -29,13 +34,32 @@ $("#menu-button").on("click", function () {
 });
 
 // Setup slider and display
+/// Set sound default value
+let masterVolume = 0.25;
+const soundSlider = document.getElementById("soundSlider");
+soundSlider.value = masterVolume * 100;
+soundSlider.oninput = function () {
+  masterVolume = this.value / 100;
+};
+
+export { masterVolume };
+
+/// Set request slider
 const requestSlider = document.getElementById("requestSlider");
 const sliderValueDisplay = document.getElementById("sliderValueDisplay");
 sliderValueDisplay.innerHTML = requestSlider.value;
 
+/// Set request default vaule
+requestSlider.value = INITIAL_POKE_COUNT;
+sliderValueDisplay.innerHTML = INITIAL_POKE_COUNT;
+
 requestSlider.oninput = function () {
   sliderValueDisplay.innerHTML = this.value;
 };
+
+function setRequestSliderMax() {
+  requestSlider.max = maxPokeCount;
+}
 
 // Setup requests
 const requestButtonElement = document.getElementById("requestButton");
@@ -50,6 +74,9 @@ async function requestUpdate(numberOfPokemon) {
   await getNewPokemonDataAndUpdateCards(numberOfPokemon);
   isAllowedToRequest = true;
   console.log("request returned");
+  // after getting the information we can set the max
+  setRequestSliderMax();
+  setAllFilterTypes(true);
 }
 
 requestButtonElement.onclick = function () {
@@ -66,10 +93,10 @@ function populateSidebarType(types) {
 
 populateSidebarType(pokeTypes);
 
-// Search
+// Search and Filters
 const fuseOptions = {
   // isCaseSensitive: false,
-  includeScore: true,
+  includeScore: false,
   // shouldSort: true,
   // includeMatches: false,
   // findAllMatches: false,
@@ -84,16 +111,125 @@ const fuseOptions = {
   keys: ["name", "types.type.name"],
 };
 
+let currentSearchInput = "";
+let selectedFilterTypes = [];
+
+/// init selected types to all tyes
+function setSlectedTypesToAll() {
+  const sidebarElement = document.getElementById("sidebar");
+  const list = sidebarElement.querySelectorAll(".type-tag");
+  list.forEach((element) => {
+    selectedFilterTypes.push(element.innerText);
+  });
+}
+setSlectedTypesToAll();
+
+// search function
+function searchWithFilters(searchInput, filterTypes, objectsToSearch) {
+  let objects = [];
+
+  filterTypes.forEach((type) => {
+    const fuse = new Fuse(objectsToSearch, fuseOptions);
+    let typeSearchResult = fuse.search(type);
+    typeSearchResult
+      .map((element) => element.item)
+      .forEach((pokemon) => {
+        if (!objects.includes(pokemon)) {
+          objects.push(pokemon);
+        }
+      });
+  });
+
+  if (searchInput) {
+    const fuse = new Fuse(objects, fuseOptions);
+    let inputSearchResult = fuse.search(searchInput);
+    objects = [];
+    inputSearchResult
+      .map((element) => element.item)
+      .forEach((element) => {
+        objects.push(element);
+      });
+  }
+
+  return objects;
+}
+//
+
+function updateSelectedFilterTypes(clickedTagName) {
+  if (selectedFilterTypes.includes(clickedTagName)) {
+    const index = selectedFilterTypes.findIndex((element) => {
+      return element === clickedTagName;
+    });
+    selectedFilterTypes.splice(index, 1);
+  } else {
+    selectedFilterTypes.push(clickedTagName);
+  }
+}
+
+function updateTypeTagClasses() {
+  const sidebarElement = document.getElementById("sidebar");
+  const list = sidebarElement.querySelectorAll(".type-tag");
+  list.forEach((element) => {
+    if (selectedFilterTypes.includes(element.innerText)) {
+      element.classList.remove("inactive");
+    } else {
+      element.classList.add("inactive");
+    }
+  });
+}
+
+function onTypeFilterChange() {
+  updateTypeTagClasses();
+  const objects = searchWithFilters(
+    currentSearchInput,
+    selectedFilterTypes,
+    pokemonObjects
+  );
+  updatePokemonCards(objects);
+}
+
+$("#sidebar .type-tag").on("click", function () {
+  updateSelectedFilterTypes(this.innerHTML);
+  onTypeFilterChange();
+});
+
+function setAllFilterTypes(condition) {
+  if (condition) {
+    setSlectedTypesToAll();
+  } else {
+    selectedFilterTypes = [];
+  }
+  onTypeFilterChange();
+}
+
+$("#allTypesButton").on("click", function () {
+  setAllFilterTypes(true);
+});
+$("#noneTypesButton").on("click", function () {
+  setAllFilterTypes(false);
+});
+
+/// Search input field
 $("#pokeSearch").on("search", function () {
   // Only search with 3 characters or more,
   // show everything when search is cleared.
-  if (this.value.length > 2) {
-    console.log(pokemonObjects);
-    const fuse = new Fuse(pokemonObjects, fuseOptions);
-    let result = fuse.search(this.value);
-    result = result.map((element) => element.item);
-    updatePokemonCards(result);
-  } else if (this.value.length === 0) {
-    updatePokemonCards(pokemonObjects);
+
+  currentSearchInput = this.value;
+
+  if (currentSearchInput.length > 2) {
+    currentSearchInput = this.value;
+    const objects = searchWithFilters(
+      currentSearchInput,
+      selectedFilterTypes,
+      pokemonObjects
+    );
+    updatePokemonCards(objects);
+  } else if (currentSearchInput.length === 0) {
+    const objects = searchWithFilters(
+      currentSearchInput,
+      selectedFilterTypes,
+      pokemonObjects
+    );
+    updatePokemonCards(objects);
   }
 });

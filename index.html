@@ -31,7 +31,16 @@
     <main>
       <aside id="sidebar">
         <section class="content">
-          <h2 class="lucky-font">Data</h2>
+          <h2 class="lucky-font">Configuration</h2>
+          <h3 class="lucky-font">Sound</h3>
+          <input
+            id="soundSlider"
+            class="slider"
+            type="range"
+            min="0"
+            max="100"
+          />
+          <h3 class="lucky-font">Pokemon</h3>
           <input
             id="requestSlider"
             class="slider"
@@ -42,9 +51,10 @@
           <p id="sliderValueDisplay">9999</p>
           <input id="requestButton" type="button" value="Request" />
           <h2 class="lucky-font">Filter</h2>
-          <p style="width: 200px">all filters do not work yet</p>
           <h3 class="lucky-font">Types</h3>
           <div id="tag-wrapper"></div>
+          <input id="allTypesButton" type="button" value="All" />
+          <input id="noneTypesButton" type="button" value="None" />
           <h3 class="lucky-font">Data</h3>
         </section>
       </aside>

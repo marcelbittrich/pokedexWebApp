@@ -20,11 +20,11 @@ figure {
 
 body h2 {
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 body h3 {
-  padding-top: 15px;
+  padding-top: 10px;
   padding-bottom: 5px;
 }
 
@@ -104,6 +104,7 @@ header input {
 main {
   flex: 1;
   overflow-y: scroll;
+  overflow-x: hidden;
   background-color: antiquewhite;
 }
 
@@ -131,14 +132,23 @@ main #sidebar .content #tag-wrapper {
   flex-wrap: wrap;
   gap: 5px;
   width: 200px;
+  padding-bottom: 10px;
+}
+
+#sidebar .type-tag {
+  cursor: pointer;
 }
 
 .type-tag {
+  cursor: default;
   font-size: 16px;
   color: white;
-  background-color: gray;
   padding: 4px;
   border-radius: 3px;
+}
+
+.type-tag.inactive {
+  background-color: gray !important;
 }
 
 main #pokemon-collection {

@@ -1,7 +1,9 @@
 import { firstLetterToUpper } from "./utils.js";
 import { createPokeTypeTagByName } from "./poketypes.js";
+import { masterVolume } from "./source.js";
 
 let pokemonObjects = [];
+let maxPokeCount = 0;
 
 const createPokemonCard = (id, name, imageUrl) => {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
@@ -23,25 +25,23 @@ async function fetchData(numOfPokemon) {
     let response = await window.fetch(url);
     let data = await response.json();
 
-    // data includes name and url of pokemon
-    let pokemonArray = [];
-    data.results.forEach((element) => {
-      pokemonArray.push(element);
-    });
+    // set maxPokeCount
+    maxPokeCount = data.count;
 
-    // fetch pokemon url to get more data
+    // data includes only names and urls of all pokemon
+    // fetch each pokemon url to get more data
     let promiseArray = [];
-    pokemonArray.forEach((element) => {
-      promiseArray.push(window.fetch(element.url));
+    data.results.forEach((pokemon) => {
+      promiseArray.push(window.fetch(pokemon.url));
     });
 
-    let allPokemonData = await Promise.all(promiseArray);
+    const allPokemonData = await Promise.all(promiseArray);
 
+    // parse the retruned json data into objects
     promiseArray = [];
     allPokemonData.forEach((element) => {
       promiseArray.push(element.json());
     });
-
     return await Promise.all(promiseArray);
   } catch (error) {
     console.log(error);
@@ -69,6 +69,8 @@ function updateModalCard(pokemon) {
 async function updatePokemonCards(pokemonObjects) {
   $("#pokemon-collection").empty();
 
+  pokemonObjects.sort((a, b) => a.id - b.id);
+
   for (let i = 0; i < pokemonObjects.length; i++) {
     const pokemon = pokemonObjects[i];
     $("#pokemon-collection").append(
@@ -83,7 +85,8 @@ async function updatePokemonCards(pokemonObjects) {
 
     setTimeout(() => {
       var battleCry = new Audio(pokemonObjects[pokemonIndex].cries.latest);
-      battleCry.volume = 0.01;
+      battleCry.volume = masterVolume / 2;
+      console.log(battleCry.volume);
       battleCry.play();
     }, 100);
   });
@@ -109,4 +112,9 @@ $("#modal").on("click", function () {
   changeVisiblity($("#modal"), false);
 });
 
-export { getNewPokemonDataAndUpdateCards, updatePokemonCards, pokemonObjects };
+export {
+  getNewPokemonDataAndUpdateCards,
+  updatePokemonCards,
+  pokemonObjects,
+  maxPokeCount,
+};
