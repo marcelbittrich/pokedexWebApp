@@ -112,10 +112,10 @@ main #sidebar {
   padding-top: 80px;
   position: fixed;
   width: 0;
-  height: 100%;
   top: 0;
   left: 0;
   overflow-x: hidden;
+  overflow-y: scroll;
   resize: horizontal;
   background-color: orange;
   transition: width 0.5s;

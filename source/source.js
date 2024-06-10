@@ -18,19 +18,34 @@ async function initSide() {
 }
 initSide();
 
-// Adjust sidebar padding-top on open
-$("#menu-button").on("click", function () {
+// Adjust sidebar css on open and resize
+function toggleSidebar() {
   const sidebarWidth = 250 + "px";
   if ($("#sidebar").css("width") === "0px") {
-    let headerHeight = $("header").css("height").split("px")[0];
-    headerHeight = parseFloat(headerHeight) + 20;
-    headerHeight += "px";
-    $("#sidebar").css("width", sidebarWidth).css("padding-top", headerHeight);
+    $("#sidebar").css("width", sidebarWidth);
     $("#pokemon-collection").css("margin-left", sidebarWidth);
   } else {
     $("#sidebar").css("width", "0px");
     $("#pokemon-collection").css("margin-left", "0px");
   }
+}
+
+function setSideBarCss() {
+  let headerHeight = $("header").css("height").split("px")[0];
+  headerHeight = parseFloat(headerHeight) + 20;
+  headerHeight += "px";
+  $("#sidebar")
+    .css("padding-top", headerHeight)
+    .css("height", `calc(100% - ${headerHeight}`);
+}
+
+$("#menu-button").on("click", function () {
+  toggleSidebar();
+  setSideBarCss();
+});
+
+$(window).on("resize", function () {
+  setSideBarCss();
 });
 
 // Setup slider and display
