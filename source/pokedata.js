@@ -1,3 +1,6 @@
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
 import { firstLetterToUpper } from "./utils.js";
 import { createPokeTypeTagByName } from "./poketypes.js";
 import { masterVolume } from "./source.js";

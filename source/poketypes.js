@@ -1,3 +1,6 @@
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
 const pokeTypes = [
   { name: "normal", color: [168, 168, 118] },
   { name: "fire", color: [245, 63, 5] },

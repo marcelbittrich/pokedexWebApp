@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <link rel="icon" type="image/png" href="/assets/Meisterball_Traumwelt-CfqUPWeg.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <title>Marcel's Pokedex</title>
+    <script type="module" crossorigin src="/assets/index-gBP9tQpO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DJ7ZrIuu.css">
+  </head>
+  <body>
+    <header>
+      <div id="menu-button">
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+      </div>
+      <h1 class="lucky-font">Pokedex</h1>
+      <input
+        type="search"
+        id="pokeSearch"
+        placeholder="Search for favourite Pokemon"
+        incremental
+      />
+    </header>
+    <main>
+      <aside id="sidebar">
+        <section class="content">
+          <h2 class="lucky-font">Configuration</h2>
+          <h3 class="lucky-font">Sound</h3>
+          <input
+            id="soundSlider"
+            class="slider"
+            type="range"
+            min="0"
+            max="100"
+          />
+          <h3 class="lucky-font">Pokemon</h3>
+          <input
+            id="requestSlider"
+            class="slider"
+            type="range"
+            min="1"
+            max="2000"
+          />
+          <p id="sliderValueDisplay">9999</p>
+          <input id="requestButton" type="button" value="Request" />
+          <h2 class="lucky-font">Filter</h2>
+          <h3 class="lucky-font">Types</h3>
+          <div id="tag-wrapper"></div>
+          <input id="allTypesButton" type="button" value="All" />
+          <input id="noneTypesButton" type="button" value="None" />
+          <h3 class="lucky-font">Data</h3>
+        </section>
+      </aside>
+
+      <section id="pokemon-collection"></section>
+    </main>
+    <div id="modal">
+      <section id="modal-card">
+        <img src="data:image/svg+xml,%3csvg%20width='600'%20height='400'%20viewBox='0%200%20715%20401'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M695%200.5H249C237.954%200.5%20229%209.4543%20229%2020.5V159.054C229%20170.099%20220.046%20179.054%20209%20179.054H20C8.9543%20179.054%200%20188.008%200%20199.054V380.5C0%20391.546%208.95432%20400.5%2020%20400.5H695C706.046%20400.5%20715%20391.546%20715%20380.5V20.5C715%209.45431%20706.046%200.5%20695%200.5Z'%20fill='%23FDD751'/%3e%3c/svg%3e" width="715" height="400" />
+        <div class="content">
+          <div class="head">
+            <figure>
+              <img
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+              />
+            </figure>
+            <div class="main-info">
+              <div class="grid-element">Name</div>
+              <div id="modal-name" class="grid-element">NAMEVALUE</div>
+              <div class="grid-element">Types</div>
+              <div id="modal-types" class="grid-element"></div>
+              <div class="grid-element">Weight</div>
+              <div id="modal-weight" class="grid-element">WEIGHTVALUE</div>
+            </div>
+          </div>
+          <div class="side-info">Side Info</div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

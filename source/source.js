@@ -1,5 +1,9 @@
 console.log("hello from the code");
 
+import Fuse from "fuse.js";
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
 import {
   getNewPokemonDataAndUpdateCards,
   updatePokemonCards,
