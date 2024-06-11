@@ -52,21 +52,42 @@ async function fetchData(numOfPokemon) {
 }
 
 function updateModalCard(pokemon) {
+  const idText = "#" + pokemon.id.toString().padStart(4, "0");
+  $("#pokeId-wrapper").text(idText);
+
   const imageUrl = pokemon.sprites.front_default;
   $("#modal-card .content img").attr("src", imageUrl);
 
-  $("#modal-name").text(firstLetterToUpper(pokemon.name));
-
-  $("#modal-types").empty();
+  $("#modal-name-value").text(firstLetterToUpper(pokemon.name));
+  $("#modal-types-value").empty();
   const $typeElementArray = pokemon.types
     .map((typeSlot) => {
       return createPokeTypeTagByName(typeSlot.type.name);
     })
     .forEach((element) => {
-      element.appendTo($("#modal-types"));
+      element.appendTo($("#modal-types-value"));
     });
+  $("#modal-weight-value").text(pokemon.weight);
 
-  $("#modal-weight").text(pokemon.weight);
+  const statNames = ["hp", "attack", "defense", "spatk", "spdef", "speed"];
+  let statArray = pokemon.stats;
+  statArray = statArray.map((element) => {
+    return element.base_stat;
+  });
+
+  for (let i = 0; i < statNames.length; i++) {
+    const numberDivId = `#${statNames[i]}-stat-number`;
+    $(numberDivId).text(statArray[i].toString());
+
+    const barDivId = `#${statNames[i]}-stat-bar-foreground`;
+    $(barDivId).css("width", "0%");
+
+    setTimeout(() => {
+      const percentage =
+        Math.min((statArray[i] / 200) * 100, 100).toString() + "%";
+      $(barDivId).css("width", percentage);
+    }, 100);
+  }
 }
 
 async function updatePokemonCards(pokemonObjects) {
@@ -105,12 +126,15 @@ async function getNewPokemonDataAndUpdateCards(numOfPokemon) {
 }
 
 // Modal
+
+function createModal() {}
+
 function changeVisiblity($element, bool) {
   const displayValue = bool ? "block" : "none";
   $element.css("display", displayValue);
 }
 
-$("#modal").on("click", function () {
+$("#close-modal-wrapper").on("click", function () {
   changeVisiblity($("#modal"), false);
 });
 

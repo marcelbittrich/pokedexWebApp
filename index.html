@@ -66,24 +66,100 @@
     </main>
     <div id="modal">
       <section id="modal-card">
-        <img src="img/Subtract.svg" width="715" height="400" />
+        <div id="pokeId-wrapper">#0001</div>
+        <div id="close-modal-wrapper">X</div>
         <div class="content">
+          <figure>
+            <img
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
+            />
+          </figure>
           <div class="head">
-            <figure>
-              <img
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
-              />
-            </figure>
             <div class="main-info">
-              <div class="grid-element">Name</div>
-              <div id="modal-name" class="grid-element">NAMEVALUE</div>
-              <div class="grid-element">Types</div>
-              <div id="modal-types" class="grid-element"></div>
-              <div class="grid-element">Weight</div>
-              <div id="modal-weight" class="grid-element">WEIGHTVALUE</div>
+              <div id="modal-name" class="main-info-line">
+                <div id="modal-name-key" class="main-info-entry">Name</div>
+                <div id="modal-name-value" class="main-info-entry">
+                  NAMEVALUE Name Name
+                </div>
+              </div>
+              <div id="modal-types" class="main-info-line">
+                <div id="modal-types-key" class="main-info-entry">Types</div>
+                <div id="modal-types-value" class="main-info-entry">Type 1</div>
+              </div>
+              <div id="modal-weight" class="main-info-line">
+                <div id="modal-weight-key" class="main-info-entry">Weight</div>
+                <div id="modal-weight-value" class="main-info-entry">
+                  WEIGHTVALUE
+                </div>
+              </div>
             </div>
           </div>
-          <div class="side-info">Side Info</div>
+          <div class="side-info">
+            <div class="stat-block">
+              <div id="hp-stat" class="stat-line">
+                <div id="hp-stat-name" class="stat-name">HP</div>
+                <div id="hp-stat-number" class="stat-number">156</div>
+                <div id="hp-stat-bar" class="stat-bar">
+                  <div
+                    id="hp-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+              <div id="attack-stat" class="stat-line">
+                <div id="attack-stat-name" class="stat-name">Attack</div>
+                <div id="attack-stat-number" class="stat-number">156</div>
+                <div id="attack-stat-bar" class="stat-bar">
+                  <div
+                    id="attack-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+              <div id="defense-stat" class="stat-line">
+                <div id="defense-stat-name" class="stat-name">Defense</div>
+                <div id="defense-stat-number" class="stat-number">156</div>
+                <div id="defense-stat-bar" class="stat-bar">
+                  <div
+                    id="defense-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="stat-block">
+              <div id="spatk-stat" class="stat-line">
+                <div id="spatk-stat-name" class="stat-name">Sp.Atk</div>
+                <div id="spatk-stat-number" class="stat-number">165</div>
+                <div id="spatk-stat-bar" class="stat-bar">
+                  <div
+                    id="spatk-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+              <div id="spdef-stat" class="stat-line">
+                <div id="spdef-stat-name" class="stat-name">Sp.Def</div>
+                <div id="spdef-stat-number" class="stat-number">165</div>
+                <div id="spdef-stat-bar" class="stat-bar">
+                  <div
+                    id="spdef-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+              <div id="speed-stat" class="stat-line">
+                <div id="speed-stat-name" class="stat-name">Speed</div>
+                <div id="speed-stat-number" class="stat-number">165</div>
+                <div id="speed-stat-bar" class="stat-bar">
+                  <div
+                    id="speed-stat-bar-foreground"
+                    class="stat-bar-foreground"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
