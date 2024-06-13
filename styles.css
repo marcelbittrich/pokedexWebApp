@@ -28,9 +28,6 @@ body h1 {
   color: #ffffff;
 }
 
-main {
-}
-
 header {
   background-color: #ff0000;
   color: #ffffff;
@@ -476,5 +473,29 @@ main #pokemon-collection {
     top: 330px;
     flex-direction: column;
     gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #modal-card {
+    height: 600px;
+    width: 330px;
+  }
+
+  #modal-card .main-info {
+    top: 205px;
+  }
+
+  #modal-card .main-info .main-info-entry {
+    height: 2em;
+  }
+
+  #modal-card #modal-name-value {
+    top: -195px;
+    left: 0px;
+  }
+
+  #modal-card .content .side-info {
+    top: 295px;
   }
 }
