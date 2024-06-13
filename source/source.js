@@ -13,7 +13,7 @@ import {
 import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
 
 // Globals
-const INITIAL_POKE_COUNT = 15;
+const INITIAL_POKE_COUNT = 151;
 
 // Initial site data
 async function initSide() {

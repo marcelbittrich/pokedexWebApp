@@ -14,7 +14,7 @@ const createPokemonCard = (id, name, imageUrl) => {
   let $pokemonCard = $("<div>").addClass("pokemon-card").appendTo($cardWrapper);
 
   let $picture = $("<figure>")
-    .append(`<img src=${imageUrl}>`)
+    .append(`<img src=${imageUrl} loading="lazy">`)
     .appendTo($pokemonCard);
 
   name = firstLetterToUpper(name);
@@ -126,8 +126,9 @@ async function getNewPokemonDataAndUpdateCards(numOfPokemon) {
 }
 
 // Modal
-
-function createModal() {}
+function createModal() {
+  //TODO: move modal from index.html here
+}
 
 function changeVisiblity($element, bool) {
   const displayValue = bool ? "block" : "none";
