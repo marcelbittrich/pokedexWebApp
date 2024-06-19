@@ -127,11 +127,11 @@ header #menu-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
 }
 
 header #menu-button:hover {
-  margin: 0;
-  border: 2px solid darkgray;
+  outline: 2px solid #1c1c1c;
 }
 
 header #menu-button .menu-line {
@@ -203,12 +203,12 @@ main #sidebar p {
   border-radius: 5px;
   border: 0px solid #1c1c1c;
   background-color: white;
+  cursor: pointer;
 }
 
 .pokedex-button:hover,
 .pokedex-button:active {
   outline: 2px solid #1c1c1c;
-  background-color: antiquewhite;
 }
 
 main #sidebar .slider-wrapper {
