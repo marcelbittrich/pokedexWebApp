@@ -36,32 +36,53 @@
         <section class="content">
           <h2 class="lucky-font">Configuration</h2>
           <h3 class="lucky-font">Sound</h3>
-          <input
-            id="soundSlider"
-            class="slider"
-            type="range"
-            min="0"
-            max="100"
-          />
+          <div class="config-wrapper">
+            <div class="slider-wrapper">
+              <input
+                id="soundSlider"
+                class="slider"
+                type="range"
+                min="0"
+                max="100"
+              />
+            </div>
+          </div>
           <h3 class="lucky-font">Pokemon</h3>
-          <input
-            id="requestSlider"
-            class="slider"
-            type="range"
-            min="1"
-            max="2000"
-          />
-          <p id="sliderValueDisplay">9999</p>
-          <input id="requestButton" type="button" value="Request" />
+          <div class="config-wrapper">
+            <p id="sliderValueDisplay">9999</p>
+            <input
+              id="requestButton"
+              type="button"
+              value="Request"
+              class="pokedex-button"
+            />
+            <div class="slider-wrapper">
+              <input
+                id="requestSlider"
+                class="slider"
+                type="range"
+                min="1"
+                max="2000"
+              />
+            </div>
+          </div>
           <h2 class="lucky-font">Filter</h2>
           <h3 class="lucky-font">Types</h3>
           <div id="tag-wrapper"></div>
-          <input id="allTypesButton" type="button" value="All" />
-          <input id="noneTypesButton" type="button" value="None" />
-          <h3 class="lucky-font">Data</h3>
+          <input
+            id="allTypesButton"
+            type="button"
+            value="All"
+            class="pokedex-button"
+          />
+          <input
+            id="noneTypesButton"
+            type="button"
+            value="None"
+            class="pokedex-button"
+          />
         </section>
       </aside>
-
       <section id="pokemon-collection"></section>
     </main>
     <div id="modal">
