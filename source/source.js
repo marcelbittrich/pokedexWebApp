@@ -14,6 +14,7 @@ import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
 
 // Globals
 const INITIAL_POKE_COUNT = 151;
+const SIDEBAR_WIDTH_OPEN = 230;
 
 // Initial site data
 async function initSide() {
@@ -24,7 +25,7 @@ initSide();
 
 // Adjust sidebar css on open and resize
 function toggleSidebar() {
-  const sidebarWidth = 250 + "px";
+  const sidebarWidth = SIDEBAR_WIDTH_OPEN + "px";
   if ($("#sidebar").css("width") === "0px") {
     $("#sidebar").css("width", sidebarWidth);
     $("#pokemon-collection").css("margin-left", sidebarWidth);
