@@ -37,16 +37,41 @@ header input {
   color: #1c1c1c;
 }
 
+header input::placeholder {
+  color: grey;
+  opacity: 1; /* Firefox */
+}
+
+header input::-ms-input-placeholder {
+  /* Edge 12 -18 */
+  color: grey;
+}
+
 #menu-button {
-  background-color: #d9d9d9;
+  background-color: white;
+}
+
+header #menu-button:hover {
+  outline: 2px solid #1c1c1c;
 }
 
 #menu-button .menu-line {
-  background-color: #1c1c1c;
+  background-color: grey;
 }
 
 #sidebar {
   background-color: #d9d9d9;
+}
+
+.pokedex-button {
+  color: #1c1c1c;
+  border: 0px solid #1c1c1c;
+  background-color: white;
+}
+
+.pokedex-button:hover,
+.pokedex-button:active {
+  outline: 2px solid #1c1c1c;
 }
 
 .slider-wrapper .slider {
@@ -110,28 +135,24 @@ body {
 
 header {
   height: fit-content;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 50px 150px auto;
+  gap: 10px;
   padding: 10px;
   z-index: 3;
 }
 
 header #menu-button {
   margin: 2px;
-  width: 30px;
-  height: 30px;
-  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  justify-self: start;
+  align-self: center;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
-}
-
-header #menu-button:hover {
-  outline: 2px solid #1c1c1c;
 }
 
 header #menu-button .menu-line {
@@ -141,16 +162,18 @@ header #menu-button .menu-line {
 }
 
 header h1 {
-  position: relative;
+  justify-self: center;
+  align-self: center;
 }
 
-header input {
+header #pokeSearch {
+  justify-self: stretch;
+  align-self: center;
   padding: 0 10px 0 10px;
   font-size: 16px;
   border: 0px;
   border-radius: 5px;
   height: 40px;
-  flex: 1;
 }
 
 main {
@@ -175,12 +198,12 @@ main #sidebar {
 }
 
 main #sidebar .content {
-  padding: 10px;
+  padding-left: 10px;
+  width: 200px;
 }
 
 main #sidebar .config-wrapper {
   background-color: lightgrey;
-  width: 180px;
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -199,16 +222,11 @@ main #sidebar p {
 .pokedex-button {
   -webkit-appearance: none; /* Override default */
   appearance: none;
+  height: 28px;
+  line-height: 16px;
   padding: 6px;
   border-radius: 5px;
-  border: 0px solid #1c1c1c;
-  background-color: white;
   cursor: pointer;
-}
-
-.pokedex-button:hover,
-.pokedex-button:active {
-  outline: 2px solid #1c1c1c;
 }
 
 main #sidebar .slider-wrapper {
@@ -216,9 +234,9 @@ main #sidebar .slider-wrapper {
 }
 
 .slider-wrapper input {
-  margin: 16px 0;
   -webkit-appearance: none; /* Override default */
   appearance: none;
+  margin: 16px 0;
   width: 100%;
   height: 6px;
   border-radius: 3px;
@@ -501,6 +519,16 @@ main #pokemon-collection {
 
 /* Modal Media */
 @media only screen and (max-width: 780px) {
+  header {
+    grid-template-columns: 50px auto;
+    grid-template-rows: 50px 50px;
+  }
+
+  header h1 {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+  }
+
   #modal-card {
     height: 660px;
     width: 360px;
