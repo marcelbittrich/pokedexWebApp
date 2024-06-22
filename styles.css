@@ -86,11 +86,11 @@ header #menu-button:hover {
   background: #ff0000;
 }
 
-#modal-card .stat-bar {
+#modal .stat-bar {
   background-color: #8a8a8a;
 }
 
-#modal-card .stat-bar-foreground {
+#modal .stat-bar-foreground {
   background-color: #ecb018;
 }
 
@@ -355,7 +355,7 @@ main #pokemon-collection {
   box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.95);
 }
 
-#modal {
+#overlay {
   display: none;
   position: fixed;
   z-index: 5;
@@ -364,9 +364,10 @@ main #pokemon-collection {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#modal-card {
+#modal {
   overflow: hidden;
   position: fixed;
+  z-index: 6;
   background-color: #d9d9d9;
   top: 50%;
   left: 50%;
@@ -404,7 +405,7 @@ main #pokemon-collection {
   line-height: 40px;
 }
 
-#modal-card .content {
+#modal .content {
   gap: 0;
   position: absolute;
   top: 0;
@@ -414,19 +415,14 @@ main #pokemon-collection {
   font-size: 20px;
 }
 
-#modal-card .content .head {
-  width: 100%;
-  height: 180px;
-}
-
-#modal-card .content figure {
+#modal .content figure {
   background-color: #ecb018;
   border-radius: 0 0 20px 0;
   width: 230px;
   height: 190px;
 }
 
-#modal-card .content figure img {
+#modal .content figure img {
   object-fit: contain;
   width: 100%;
   height: 100%;
@@ -434,31 +430,31 @@ main #pokemon-collection {
   filter: drop-shadow(5px 5px 0px rgba(0, 0, 0, 0.5));
 }
 
-#modal-card .main-info {
+#modal .main-info {
   position: absolute;
   left: 300px;
   top: 35px;
 }
 
-#modal-card .main-info .main-info-line {
+#modal .main-info .main-info-line {
   display: flex;
   flex-direction: row;
 }
 
-#modal-card .main-info .main-info-entry {
+#modal .main-info .main-info-entry {
   flex: 1 0 auto;
   width: 160px;
   height: 2.5em;
 }
 
-#modal-card #modal-types-value {
+#modal #modal-types-value {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: flex-start;
 }
 
-#modal-card .content .side-info {
+#modal .content .side-info {
   position: absolute;
   left: 49%;
   top: 245px;
@@ -468,32 +464,32 @@ main #pokemon-collection {
   gap: 50px;
 }
 
-#modal-card .stat-block {
+#modal .stat-block {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-#modal-card .stat-line {
+#modal .stat-line {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-#modal-card .stat-name {
+#modal .stat-name {
   width: 100px;
 }
 
-#modal-card .stat-number {
+#modal .stat-number {
   width: 40px;
   text-align: right;
 }
 
-#modal-card .stat-bar {
+#modal .stat-bar {
   width: 120px;
 }
 
-#modal-card .stat-bar-foreground {
+#modal .stat-bar-foreground {
   height: 100%;
   width: 0%;
   transition: width 0.5s ease-out;
@@ -539,50 +535,50 @@ main #pokemon-collection {
     grid-row: 1 / span 1;
   }
 
-  #modal-card {
+  #modal {
     height: 660px;
     width: 360px;
     border-radius: 20px;
   }
 
-  #modal-card #pokeId-wrapper {
+  #modal #pokeId-wrapper {
     z-index: 10;
     position: absolute;
     top: 0px;
     right: 0px;
   }
 
-  #modal-card .content figure {
+  #modal .content figure {
     border-radius: 0;
     width: 100%;
   }
 
-  #modal-card .main-info {
+  #modal .main-info {
     position: absolute;
     transform: translate(-50%, 0);
     left: 55%;
     top: 160px;
   }
 
-  #modal-card .main-info {
+  #modal .main-info {
     position: absolute;
     transform: translate(-50%, 0);
     left: 55%;
     top: 220px;
   }
 
-  #modal-card #modal-name-key {
+  #modal #modal-name-key {
     display: none;
   }
 
-  #modal-card #modal-name-value {
+  #modal #modal-name-value {
     position: absolute;
     font-size: 16px;
     top: -210px;
     left: -15px;
   }
 
-  #modal-card .content .side-info {
+  #modal .content .side-info {
     top: 330px;
     flex-direction: column;
     gap: 20px;
@@ -590,25 +586,25 @@ main #pokemon-collection {
 }
 
 @media only screen and (max-width: 400px) {
-  #modal-card {
+  #modal {
     height: 600px;
     width: 330px;
   }
 
-  #modal-card .main-info {
+  #modal .main-info {
     top: 205px;
   }
 
-  #modal-card .main-info .main-info-entry {
+  #modal .main-info .main-info-entry {
     height: 2em;
   }
 
-  #modal-card #modal-name-value {
+  #modal #modal-name-value {
     top: -195px;
     left: 0px;
   }
 
-  #modal-card .content .side-info {
+  #modal .content .side-info {
     top: 295px;
   }
 }

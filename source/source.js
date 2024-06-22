@@ -6,17 +6,18 @@ window.$ = window.jQuery = jQuery;
 
 import {
   getNewPokemonDataAndUpdateCards,
-  updatePokemonCards,
   pokemonObjects,
   maxPokeCount,
 } from "./pokedata.js";
 import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
+import { createModal } from "./modal.js";
 
 // Globals
 const INITIAL_POKE_COUNT = 151;
 const SIDEBAR_WIDTH_OPEN = 230;
 
 // Initial site data
+createModal();
 async function initSide() {
   await getNewPokemonDataAndUpdateCards(INITIAL_POKE_COUNT);
   setRequestSliderMax();
