@@ -133,7 +133,7 @@ function updateModalCard(pokemon) {
   $("#pokeId-wrapper").text(idText);
 
   const imageUrl = pokemon.sprites.front_default;
-  $("#modal-card .content img").attr("src", imageUrl);
+  $("#modal .content img").attr("src", imageUrl);
 
   // Main Info
   $(`#modal-${MAIN_INFO[0]}-value`).text(firstLetterToUpper(pokemon.name));
