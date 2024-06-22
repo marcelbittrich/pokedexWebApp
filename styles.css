@@ -199,6 +199,7 @@ main #sidebar {
 
 main #sidebar .content {
   padding-left: 10px;
+  padding-bottom: 50px;
   width: 200px;
 }
 
