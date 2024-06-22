@@ -1,8 +1,6 @@
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
-import { updatePokemonCards } from "./pokecards";
-
 let maxPokeCount = 0;
 
 async function fetchData(numOfPokemon) {
@@ -35,7 +33,7 @@ async function fetchData(numOfPokemon) {
 }
 
 async function getPokemonData(numOfPokemon) {
-  $("#pokemon-collection").empty();
+  $("#pc-cards").empty();
 
   $("<div>").addClass("loading").prependTo($("body main"));
   let pokemonObjects = await fetchData(numOfPokemon);

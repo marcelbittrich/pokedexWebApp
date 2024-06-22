@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
-import { updatePokemonCards } from "./pokecards.js";
+import { updatePokemonCollection } from "./pokecards.js";
 import { getPokemonData, maxPokeCount } from "./pokedata.js";
 import { getAllTypeNames, getAllTypeTagElements } from "./poketypes.js";
 import { createModal } from "./modal.js";
@@ -95,7 +95,7 @@ async function requestUpdate(numberOfPokemon) {
     selectedFilterTypes,
     pokemonObjects
   );
-  updatePokemonCards(filteredPokemons);
+  updatePokemonCollection(filteredPokemons, pokemonObjects.length);
 }
 
 requestButtonElement.onclick = function () {
@@ -193,7 +193,7 @@ function onTypeFilterChange() {
     selectedFilterTypes,
     pokemonObjects
   );
-  updatePokemonCards(objects);
+  updatePokemonCollection(objects, pokemonObjects.length);
 }
 
 $("#sidebar .type-tag").on("click", function () {
@@ -226,14 +226,14 @@ $("#pokeSearch").on("input", function () {
         selectedFilterTypes,
         pokemonObjects
       );
-      updatePokemonCards(objects);
+      updatePokemonCollection(objects, pokemonObjects.length);
     } else if (currentSearchInput.length === 0) {
       const objects = searchWithFilters(
         "",
         selectedFilterTypes,
         pokemonObjects
       );
-      updatePokemonCards(objects);
+      updatePokemonCollection(objects, pokemonObjects.length);
     }
   }, 300);
 });

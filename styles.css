@@ -285,12 +285,20 @@ main #sidebar .content #tag-wrapper {
   background-color: gray !important;
 }
 
-main #pokemon-collection {
+#pokemon-collection {
+  transition: margin-left 0.5s;
+  padding: 20px;
+}
+
+#pc-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  padding: 20px;
+  padding-top: 20px;
   gap: 20px;
-  transition: margin-left 0.5s;
+}
+
+#pc-info {
+  color: grey;
 }
 
 .card-wrapper {

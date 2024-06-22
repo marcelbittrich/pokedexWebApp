@@ -16,29 +16,31 @@ const createPokemonCard = (id, name, imageUrl) => {
   return $cardWrapper;
 };
 
-async function updatePokemonCards(pokemonObjects) {
-  $("#pokemon-collection").empty();
+async function updatePokemonCollection(filteredObjects, numOfTotalObj) {
+  $("#pc-info").text(
+    `Filtered: ${filteredObjects.length} / Total: ${numOfTotalObj}`
+  );
+  $("#pc-cards").empty();
+  filteredObjects.sort((a, b) => a.id - b.id);
 
-  pokemonObjects.sort((a, b) => a.id - b.id);
-
-  for (let i = 0; i < pokemonObjects.length; i++) {
-    const pokemon = pokemonObjects[i];
-    $("#pokemon-collection").append(
+  for (let i = 0; i < filteredObjects.length; i++) {
+    const pokemon = filteredObjects[i];
+    $("#pc-cards").append(
       createPokemonCard(i, pokemon.name, pokemon.sprites.front_default)
     );
   }
 
   $("div.card-wrapper").on("click", function () {
     const pokemonIndex = $(this).attr("id").split("-")[1];
-    updateModalCard(pokemonObjects[pokemonIndex]);
+    updateModalCard(filteredObjects[pokemonIndex]);
     changeVisiblity($("#overlay"), true);
 
     setTimeout(() => {
-      var battleCry = new Audio(pokemonObjects[pokemonIndex].cries.latest);
+      var battleCry = new Audio(filteredObjects[pokemonIndex].cries.latest);
       battleCry.volume = masterVolume / 4;
       battleCry.play();
     }, 100);
   });
 }
 
-export { createPokemonCard, updatePokemonCards };
+export { createPokemonCard, updatePokemonCollection };
