@@ -134,17 +134,7 @@ const fuseOptions = {
 };
 
 let currentSearchInput = "";
-let selectedFilterTypes = [];
-
-/// init selected types to all tyes
-function setSlectedTypesToAll() {
-  const sidebarElement = document.getElementById("sidebar");
-  const list = sidebarElement.querySelectorAll(".type-tag");
-  list.forEach((element) => {
-    selectedFilterTypes.push(element.innerText);
-  });
-}
-setSlectedTypesToAll();
+let selectedFilterTypes = pokeTypes.map((type) => type.name);
 
 // search function
 function searchWithFilters(searchInput, filterTypes, objectsToSearch) {
@@ -250,7 +240,7 @@ $("#pokeSearch").on("input", function () {
       updatePokemonCards(objects);
     } else if (currentSearchInput.length === 0) {
       const objects = searchWithFilters(
-        currentSearchInput,
+        "",
         selectedFilterTypes,
         pokemonObjects
       );
