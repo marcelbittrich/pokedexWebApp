@@ -5,25 +5,15 @@ import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
 import { updatePokemonCards } from "./pokecards.js";
-import {
-  getNewPokemonDataAndUpdateCards,
-  pokemonObjects,
-  maxPokeCount,
-} from "./pokedata.js";
-import { pokeTypes, createPokeTypeTag } from "./poketypes.js";
+import { getPokemonData, maxPokeCount } from "./pokedata.js";
+import { getAllTypeNames, getAllTypeTagElements } from "./poketypes.js";
 import { createModal } from "./modal.js";
 
 // Globals
 const INITIAL_POKE_COUNT = 151;
 const SIDEBAR_WIDTH_OPEN = 230;
 
-// Initial site data
-createModal();
-async function initSide() {
-  await getNewPokemonDataAndUpdateCards(INITIAL_POKE_COUNT);
-  setRequestSliderMax();
-}
-initSide();
+let pokemonObjects = [];
 
 // Adjust sidebar css on open and resize
 function toggleSidebar() {
@@ -93,12 +83,19 @@ async function requestUpdate(numberOfPokemon) {
   if (!isAllowedToRequest) return;
   console.log("request send");
   isAllowedToRequest = false;
-  await getNewPokemonDataAndUpdateCards(numberOfPokemon);
+  pokemonObjects = await getPokemonData(numberOfPokemon);
   isAllowedToRequest = true;
   console.log("request returned");
   // after getting the information we can set the max
   setRequestSliderMax();
-  setAllFilterTypes(true);
+
+  const currentSearchInput = $("#pokeSearch").val();
+  const filteredPokemons = searchWithFilters(
+    currentSearchInput,
+    selectedFilterTypes,
+    pokemonObjects
+  );
+  updatePokemonCards(filteredPokemons);
 }
 
 requestButtonElement.onclick = function () {
@@ -106,14 +103,13 @@ requestButtonElement.onclick = function () {
 };
 
 // Create type tags in sidebar
-function populateSidebarType(types) {
-  types.forEach((type) => {
-    const $typeTag = createPokeTypeTag(type.name, type.color);
-    $("#tag-wrapper").append($typeTag);
+function populateSidebarType() {
+  const typeTagElements = getAllTypeTagElements();
+  typeTagElements.forEach((typeTag) => {
+    $("#tag-wrapper").append(typeTag);
   });
 }
-
-populateSidebarType(pokeTypes);
+populateSidebarType();
 
 // Search and Filters
 const fuseOptions = {
@@ -134,7 +130,7 @@ const fuseOptions = {
 };
 
 let currentSearchInput = "";
-let selectedFilterTypes = pokeTypes.map((type) => type.name);
+let selectedFilterTypes = getAllTypeNames();
 
 // search function
 function searchWithFilters(searchInput, filterTypes, objectsToSearch) {
@@ -205,20 +201,13 @@ $("#sidebar .type-tag").on("click", function () {
   onTypeFilterChange();
 });
 
-function setAllFilterTypes(condition) {
-  if (condition) {
-    setSlectedTypesToAll();
-  } else {
-    selectedFilterTypes = [];
-  }
-  onTypeFilterChange();
-}
-
 $("#allTypesButton").on("click", function () {
-  setAllFilterTypes(true);
+  selectedFilterTypes = getAllTypeNames();
+  onTypeFilterChange();
 });
 $("#noneTypesButton").on("click", function () {
-  setAllFilterTypes(false);
+  selectedFilterTypes = [];
+  onTypeFilterChange();
 });
 
 /// Search input field
@@ -248,3 +237,11 @@ $("#pokeSearch").on("input", function () {
     }
   }, 300);
 });
+
+// Initial site data
+createModal();
+async function initSide() {
+  await requestUpdate(INITIAL_POKE_COUNT);
+  setRequestSliderMax();
+}
+initSide();

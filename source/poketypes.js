@@ -22,13 +22,22 @@ const pokeTypes = [
   { name: "fairy", color: [230, 143, 232] },
 ];
 
+function getAllTypeNames() {
+  return pokeTypes.map((type) => type.name);
+}
+
 function createPokeTypeTag(name, color) {
   let poketTypeTag = $("<div>")
     .addClass("type-tag")
     .css("background-color", `rgb(${color[0]},${color[1]},${color[2]})`)
     .text(`${name}`);
-
   return poketTypeTag;
+}
+
+function getAllTypeTagElements() {
+  return pokeTypes.map((type) => {
+    return createPokeTypeTag(type.name, type.color);
+  });
 }
 
 function createPokeTypeTagByName(name) {
@@ -36,4 +45,9 @@ function createPokeTypeTagByName(name) {
   return color ? createPokeTypeTag(name, color) : null;
 }
 
-export { pokeTypes, createPokeTypeTag, createPokeTypeTagByName };
+export {
+  getAllTypeTagElements,
+  getAllTypeNames,
+  createPokeTypeTag,
+  createPokeTypeTagByName,
+};
