@@ -4,6 +4,7 @@ import Fuse from "fuse.js";
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
+import { updatePokemonCards } from "./pokecards.js";
 import {
   getNewPokemonDataAndUpdateCards,
   pokemonObjects,
