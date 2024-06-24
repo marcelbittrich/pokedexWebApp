@@ -6,7 +6,7 @@ https://pokedex-web-app-nine.vercel.app/
 
 A front-end solution to the pokeApi, with a fuzzy search function, filters and a modal to show the stats of all your favorite Pokémon.
 
-### Dektop view 
+### Desktop view 
 #### Homepage with opened sidebar 
 <p>
   <img width="600" src="https://github.com/marcelbittrich/pokedexWebApp/assets/113523293/db944a5c-b6b8-4550-b407-51dfcf9f9492">
