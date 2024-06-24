@@ -1,5 +1,5 @@
-import { changeVisiblity, firstLetterToUpper } from "./utils";
-import { createPokeTypeTagByName } from "./poketypes";
+import { changeVisiblity, firstLetterToUpper } from "../utils";
+import { createPokeTypeTagByName } from "./tags";
 
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;

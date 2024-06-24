@@ -98,12 +98,11 @@ header #menu-button:hover {
 
 body h2 {
   padding-top: 20px;
-  padding-bottom: 5px;
 }
 
 body h3 {
-  padding-top: 10px;
-  padding-bottom: 5px;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
 
 /* fonts */
@@ -260,7 +259,7 @@ main #sidebar .slider-wrapper {
   border-radius: 50%;
 }
 
-main #sidebar .content #tag-wrapper {
+main #sidebar .content .tag-wrapper {
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -270,11 +269,11 @@ main #sidebar .content #tag-wrapper {
   padding-bottom: 10px;
 }
 
-#sidebar .type-tag {
+#sidebar .tag {
   cursor: pointer;
 }
 
-.type-tag {
+.tag {
   cursor: default;
   font-size: 16px;
   color: white;
@@ -282,7 +281,7 @@ main #sidebar .content #tag-wrapper {
   border-radius: 3px;
 }
 
-.type-tag.inactive {
+.tag.inactive {
   background-color: gray !important;
 }
 

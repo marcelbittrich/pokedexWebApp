@@ -1,8 +1,8 @@
-import { changeVisiblity, firstLetterToUpper } from "./utils";
+import { changeVisiblity, firstLetterToUpper } from "../utils";
 import { updateModalCard } from "./modal";
-import { masterVolume } from "./source";
+import { masterVolume } from "../main";
 
-const createPokemonCard = (id, name, imageUrl) => {
+export function createPokemonCard(id, name, imageUrl) {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
   let $shadowCard = $("<div>").addClass("shadow-card").appendTo($cardWrapper);
   let $pokemonCard = $("<div>").addClass("pokemon-card").appendTo($cardWrapper);
@@ -14,9 +14,9 @@ const createPokemonCard = (id, name, imageUrl) => {
   name = firstLetterToUpper(name);
   let $name = $("<p>").addClass("lucky-font").text(name).appendTo($pokemonCard);
   return $cardWrapper;
-};
+}
 
-async function updatePokemonCollection(filteredObjects, numOfTotalObj) {
+export async function updatePokemonCollection(filteredObjects, numOfTotalObj) {
   $("#pc-info").text(
     `Filtered: ${filteredObjects.length} / Total: ${numOfTotalObj}`
   );
@@ -42,5 +42,3 @@ async function updatePokemonCollection(filteredObjects, numOfTotalObj) {
     }, 100);
   });
 }
-
-export { createPokemonCard, updatePokemonCollection };
