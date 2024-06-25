@@ -1,9 +1,6 @@
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
-let maxPokeCount = 0;
-let cachedPokeData = [];
-
 export const pokeTypes = [
   { name: "normal", color: [168, 168, 118] },
   { name: "fire", color: [245, 63, 5] },
@@ -40,6 +37,25 @@ export async function getGameNames() {
   return await fetchGameNames();
 }
 
+let maxPokeCount = 0;
+// all cached data
+const cachedPokeData = {};
+// currently displayed data
+let pokemonData = [];
+
+async function getPokemonByURL(url) {
+  if (url in cachedPokeData) {
+    console.log("used cache");
+    return cachedPokeData[url];
+  }
+  console.log("fetched data");
+  const response = await window.fetch(url);
+  const data = await response.json();
+
+  cachedPokeData[url] = data;
+  return data;
+}
+
 async function fetchData(startId, endId) {
   try {
     const offset = startId - 1;
@@ -55,19 +71,10 @@ async function fetchData(startId, endId) {
     // fetch each pokemon url to get more data
     let promiseArray = [];
     data.results.forEach((pokemon) => {
-      promiseArray.push(window.fetch(pokemon.url));
+      promiseArray.push(getPokemonByURL(pokemon.url));
     });
-
-    const allPokemonData = await Promise.all(promiseArray);
-
-    // parse the retruned json data into objects
-    promiseArray = [];
-    allPokemonData.forEach((element) => {
-      promiseArray.push(element.json());
-    });
-
-    cachedPokeData = await Promise.all(promiseArray);
-    return cachedPokeData;
+    pokemonData = await Promise.all(promiseArray);
+    return pokemonData;
   } catch (error) {
     console.log(error);
   }
@@ -78,7 +85,7 @@ export async function updatePokemonData(startId, endId) {
 }
 
 export function getPokemonObjects() {
-  return cachedPokeData;
+  return pokemonData;
 }
 
 export function getMaxPokeCount() {

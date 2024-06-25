@@ -74,7 +74,6 @@ $("#pokeSearch").on("input", function () {
 
   clearTimeout(debounceTimer);
   const currentSearchInput = this.value;
-  console.log(currentSearchInput);
   debounceTimer = setTimeout(() => {
     const pokeSearch = new PokeSearch(
       getSelectedGameFilter(),
