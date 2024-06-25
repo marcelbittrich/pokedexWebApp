@@ -7,4 +7,13 @@ function changeVisiblity($element, bool) {
   $element.css("display", displayValue);
 }
 
-export { firstLetterToUpper, changeVisiblity };
+function clamp(val, min, max) {
+  val = parseFloat(val);
+  min = parseFloat(min);
+  max = parseFloat(max);
+  if (val > max) return max;
+  if (val < min) return min;
+  return val;
+}
+
+export { firstLetterToUpper, changeVisiblity, clamp };

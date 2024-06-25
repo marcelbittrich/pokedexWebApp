@@ -75,7 +75,6 @@ export class PokeSearch {
       objects = nameSearchResult.map((element) => element.item);
     }
 
-    console.log(gameSearchOptions.threshold);
     // then filter by game
     if (this._gameFilter) {
       const fuse = new Fuse(objects, gameSearchOptions);

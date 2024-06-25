@@ -5,15 +5,18 @@ window.$ = window.jQuery = jQuery;
 
 import { updatePokemonCollection } from "./modules/cards.js";
 import {
-  getPokemonObjects,
   getMaxPokeCount,
+  getPokemonObjects,
   updatePokemonData,
 } from "./data.js";
 import { createModal } from "./modules/modal.js";
 import { PokeSearch } from "./modules/search.js";
 import {
+  getRequestEndId,
+  getRequestStartId,
   getSelectedGameFilter,
   getSelectedTypeFilter,
+  setRequestMax,
 } from "./modules/sidebar.js";
 
 // Globals
@@ -30,41 +33,22 @@ soundSlider.oninput = function () {
 
 export { masterVolume };
 
-/// Set request slider
-const requestSlider = document.getElementById("requestSlider");
-const sliderValueDisplay = document.getElementById("sliderValueDisplay");
-sliderValueDisplay.innerHTML = requestSlider.value;
-
-/// Set request default vaule
-requestSlider.value = INITIAL_POKE_COUNT;
-sliderValueDisplay.innerHTML = INITIAL_POKE_COUNT;
-
-requestSlider.oninput = function () {
-  sliderValueDisplay.innerHTML = this.value;
-};
-
-function setRequestSliderMax() {
-  requestSlider.max = getMaxPokeCount();
-}
-
 // Setup requests
-const requestButtonElement = document.getElementById("requestButton");
-
 let isAllowedToRequest = true;
 
-async function requestUpdate(numberOfPokemon) {
+async function requestUpdate(startId, endId) {
   console.log("request tried, permission: " + isAllowedToRequest);
   if (!isAllowedToRequest) return;
   console.log("request send");
   isAllowedToRequest = false;
   $("#pc-cards").empty();
   $("<div>").addClass("loading").prependTo($("body main"));
-  await updatePokemonData(numberOfPokemon);
+  await updatePokemonData(startId, endId);
   $("main .loading").remove();
   isAllowedToRequest = true;
   console.log("request returned");
   // after getting the information we can set the max
-  setRequestSliderMax();
+  setRequestMax(getMaxPokeCount());
 
   const currentSearchInput = $("#pokeSearch").val();
 
@@ -77,8 +61,9 @@ async function requestUpdate(numberOfPokemon) {
   updatePokemonCollection(filteredPokemons, getPokemonObjects().length);
 }
 
+const requestButtonElement = document.getElementById("requestButton");
 requestButtonElement.onclick = function () {
-  requestUpdate(requestSlider.value);
+  requestUpdate(getRequestStartId(), getRequestEndId());
 };
 
 /// Search input field
@@ -109,7 +94,6 @@ $("#pokeSearch").on("input", function () {
 // Initial site data
 createModal();
 async function initSide() {
-  await requestUpdate(INITIAL_POKE_COUNT);
-  setRequestSliderMax();
+  await requestUpdate(1, INITIAL_POKE_COUNT);
 }
 initSide();

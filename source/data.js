@@ -40,12 +40,11 @@ export async function getGameNames() {
   return await fetchGameNames();
 }
 
-async function fetchData(numOfPokemon) {
+async function fetchData(startId, endId) {
   try {
-    // const offset = start - 1;
-    // const limit = end - offset;
-
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${numOfPokemon}&offset=0`;
+    const offset = startId - 1;
+    const limit = endId - offset;
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
     let response = await window.fetch(url);
     let data = await response.json();
 
@@ -74,8 +73,8 @@ async function fetchData(numOfPokemon) {
   }
 }
 
-export async function updatePokemonData(numOfPokemon) {
-  return await fetchData(numOfPokemon);
+export async function updatePokemonData(startId, endId) {
+  return await fetchData(startId, endId);
 }
 
 export function getPokemonObjects() {

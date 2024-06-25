@@ -86,6 +86,22 @@ header #menu-button:hover {
   background: #ff0000;
 }
 
+#fromRequestSlider::-webkit-slider-thumb {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 50%, #ff0000 0);
+}
+
+#fromRequestSlider::-moz-range-thumb {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 50%, #ff0000 0);
+}
+
+#toRequestSlider::-webkit-slider-thumb {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ff0000 0);
+}
+
+#toRequestSlider::-moz-range-thumb {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ff0000 0);
+}
+
 #modal .stat-bar {
   background-color: #8a8a8a;
 }
@@ -197,9 +213,10 @@ main #sidebar {
 }
 
 main #sidebar .content {
+  /* fixed width important to prevent elements from shifting*/
+  width: 260px;
   padding-left: 10px;
   padding-bottom: 50px;
-  width: 200px;
 }
 
 main #sidebar .config-wrapper {
@@ -214,23 +231,56 @@ main #sidebar .config-wrapper {
   gap: 10px;
 }
 
-main #sidebar p {
-  height: fit-content;
-  width: fit-content;
+main #sidebar .slider-wrapper {
+  width: 100%;
+}
+
+main #sidebar #requestInputNumbers {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#fromRequestNumber,
+#toRequestNumber {
+  font-size: 16px;
+  border: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding: 0 5px 0 5px;
+  width: 60px;
+  height: 32px;
+  border-radius: 5px;
 }
 
 .pokedex-button {
   -webkit-appearance: none; /* Override default */
   appearance: none;
-  height: 28px;
-  line-height: 16px;
+  font-size: 16px;
+  height: 32px;
+  line-height: 20px;
   padding: 6px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-main #sidebar .slider-wrapper {
+main #sidebar #requestInputSliders {
+  min-height: 50px;
   width: 100%;
+  position: relative;
+}
+
+#requestInputSliders .slider {
+  width: 100%;
+  top: 25%;
+  position: absolute;
+}
+
+#fromRequestSlider {
+  z-index: 1;
+  background: rgba(0, 0, 0, 0);
 }
 
 .slider-wrapper input {
@@ -241,22 +291,31 @@ main #sidebar .slider-wrapper {
   height: 6px;
   border-radius: 3px;
   outline: none;
+  pointer-events: none;
 }
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default */
   appearance: none;
-  width: 20px;
-  height: 20px;
+  box-shadow: none;
+  border: 0;
+  box-shadow: 0px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   border-radius: 50%;
+
+  pointer-events: all;
 }
 
 .slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  border: 0;
+  box-shadow: 0px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   border-radius: 50%;
+  pointer-events: all;
 }
 
 main #sidebar .content .tag-wrapper {
@@ -265,7 +324,7 @@ main #sidebar .content .tag-wrapper {
   align-items: start;
   flex-wrap: wrap;
   gap: 5px;
-  width: 200px;
+  width: 100%;
   padding-bottom: 10px;
 }
 
@@ -541,6 +600,16 @@ main #sidebar .content .tag-wrapper {
   header h1 {
     grid-column: 1 / span 2;
     grid-row: 1 / span 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+    width: 40px;
+    height: 40px;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 40px;
+    height: 40px;
   }
 
   #modal {

@@ -49,21 +49,45 @@
           </div>
           <h3 class="lucky-font">Pokemon</h3>
           <div class="config-wrapper">
-            <p id="sliderValueDisplay">9999</p>
-            <input
-              id="requestButton"
-              type="button"
-              value="Request"
-              class="pokedex-button"
-            />
-            <div class="slider-wrapper">
+            <div id="requestInputNumbers">
               <input
-                id="requestSlider"
-                class="slider"
-                type="range"
+                id="fromRequestNumber"
+                class="requestInput requestMax"
+                type="number"
                 min="1"
-                max="2000"
               />
+              <input
+                id="toRequestNumber"
+                class="requestInput requestMax"
+                type="number"
+                min="1"
+              />
+              <input
+                id="requestButton"
+                type="button"
+                value="Update"
+                class="pokedex-button"
+              />
+            </div>
+            <div id="requestInputSliders">
+              <div class="slider-wrapper">
+                <input
+                  id="fromRequestSlider"
+                  class="slider requestMax"
+                  type="range"
+                  min="1"
+                  max="2000"
+                />
+              </div>
+              <div class="slider-wrapper">
+                <input
+                  id="toRequestSlider"
+                  class="slider requestMax"
+                  type="range"
+                  min="1"
+                  max="2000"
+                />
+              </div>
             </div>
           </div>
           <h2 class="lucky-font">Filter</h2>
