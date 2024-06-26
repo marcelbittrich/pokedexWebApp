@@ -4,6 +4,7 @@ import { masterVolume } from "./sidebar";
 //import { masterVolume } from "../main";
 
 import jQuery from "jquery";
+import { getDataByURL } from "../data";
 window.$ = window.jQuery = jQuery;
 
 const MAIN_INFO = ["name", "types", "weight"];
@@ -60,8 +61,16 @@ function createModal() {
   const placeholderImage =
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png";
   const figureElement = $("<figure>")
-    .append($("<img>").attr("src", placeholderImage))
+    .append($("<img>").attr("src", placeholderImage).attr("id", "main-image"))
     .appendTo(contentElement);
+
+  const evolutionChainElement = $("<div>")
+    .attr("id", "evo-chain-wrapper")
+    .appendTo(figureElement);
+
+  const lineElement = $("<div>")
+    .attr("id", "evo-chain-line")
+    .appendTo(evolutionChainElement);
 
   // Main Info
   const mainInfoElement = $("<div>")
@@ -144,13 +153,64 @@ function createModal() {
   setOnClickHandlers();
 }
 
-function updateModalCard(pokemon) {
+function updateEvolutionChain(evolutionObjects) {
+  const evolutionChainElement = $("#evo-chain-wrapper");
+  evolutionObjects.forEach((object) => {
+    const imageUrl = object.sprites.front_default;
+    const evoElement = $("<div>")
+      .addClass("evo-element")
+      .appendTo(evolutionChainElement);
+    const figure = $("<img>").attr("src", imageUrl).appendTo(evoElement);
+
+    evoElement.on("click", function () {
+      updateModalCard(object);
+    });
+  });
+}
+
+function getEvoChain(evolvesToEntry, chainArray) {
+  if (evolvesToEntry.length === 0) {
+    return chainArray;
+  }
+  chainArray.push(evolvesToEntry[0].species);
+  return getEvoChain(evolvesToEntry[0].evolves_to, chainArray);
+}
+
+async function getEvoData(pokemon) {
+  const speciesData = await getDataByURL(pokemon.species.url);
+  const evoChainData = await getDataByURL(speciesData.evolution_chain.url);
+  const basePokeInfo = evoChainData.chain.species;
+  let chainArray = [basePokeInfo];
+  const allEvoChainPokemon = getEvoChain(
+    evoChainData.chain.evolves_to,
+    chainArray
+  );
+
+  // if no evolutions return empty
+  if (allEvoChainPokemon.length <= 1) {
+    return [];
+  }
+
+  let evoChainPromiseArray = [];
+  allEvoChainPokemon.forEach((pokemon) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`;
+    const pokemonData = getDataByURL(url);
+    evoChainPromiseArray.push(pokemonData);
+  });
+
+  return Promise.all(evoChainPromiseArray);
+}
+
+async function updateModalCard(pokemon) {
+  // clear prev evolution chain
+  $("#evo-chain-wrapper .evo-element").remove();
+
   // ID and Picture
   const idText = "#" + pokemon.id.toString().padStart(4, "0");
   $("#pokeId-wrapper").text(idText);
 
   const imageUrl = pokemon.sprites.front_default;
-  $("#modal .content img").attr("src", imageUrl);
+  $("#modal .content figure img").attr("src", imageUrl);
 
   // Main Info
   $(`#modal-${MAIN_INFO[0]}-value`).text(firstLetterToUpper(pokemon.name));
@@ -184,6 +244,10 @@ function updateModalCard(pokemon) {
     }, 100);
   }
   $("#battle-cry-player").attr("src", pokemon.cries.latest);
+
+  // create new evo chain
+  const allEvolutionData = await getEvoData(pokemon);
+  updateEvolutionChain(allEvolutionData);
 }
 
 export { createModal, updateModalCard };

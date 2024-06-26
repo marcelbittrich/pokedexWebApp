@@ -43,7 +43,7 @@ const cachedPokeData = {};
 // currently displayed data
 let pokemonData = [];
 
-async function getPokemonByURL(url) {
+export async function getDataByURL(url) {
   if (url in cachedPokeData) {
     console.log("used cache");
     return cachedPokeData[url];
@@ -71,7 +71,7 @@ async function fetchData(startId, endId) {
     // fetch each pokemon url to get more data
     let promiseArray = [];
     data.results.forEach((pokemon) => {
-      promiseArray.push(getPokemonByURL(pokemon.url));
+      promiseArray.push(getDataByURL(pokemon.url));
     });
     pokemonData = await Promise.all(promiseArray);
     return pokemonData;

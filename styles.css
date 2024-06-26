@@ -102,6 +102,10 @@ header #menu-button:hover {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0) 50%, #ff0000 0);
 }
 
+#modal #evo-chain-wrapper .evo-element {
+  background-color: #ecb018;
+}
+
 #modal .stat-bar {
   background-color: #8a8a8a;
 }
@@ -442,6 +446,7 @@ main #sidebar .content .tag-wrapper {
   height: 440px;
   width: 750px;
   border-radius: 20px;
+  outline: 3px solid black;
 }
 
 #pokeId-wrapper {
@@ -506,23 +511,58 @@ main #sidebar .content .tag-wrapper {
 }
 
 #modal .content figure {
+  position: relative;
   background-color: #ecb018;
   border-radius: 0 0 20px 0;
-  width: 230px;
+  width: 280px;
   height: 190px;
 }
 
-#modal .content figure img {
+#modal .content #main-image {
   object-fit: contain;
   width: 100%;
-  height: 100%;
+  height: 95%;
   scale: 1;
   filter: drop-shadow(5px 5px 0px rgba(0, 0, 0, 0.5));
 }
 
+#modal #evo-chain-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+#evo-chain-line {
+  position: absolute;
+  background-color: black;
+  top: 50%;
+  transform: translate(0%, -50%);
+  height: 3px;
+  width: 100%;
+}
+
+#evo-chain-wrapper .evo-element {
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  z-index: 10;
+  outline: 3px solid black;
+  cursor: pointer;
+}
+
+#evo-chain-wrapper .evo-element img {
+  height: 100%;
+  width: 100%;
+  filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.5));
+}
+
 #modal .main-info {
   position: absolute;
-  left: 300px;
+  left: 350px;
   top: 35px;
 }
 
@@ -546,7 +586,7 @@ main #sidebar .content .tag-wrapper {
 
 #modal .content .side-info {
   position: absolute;
-  left: 49%;
+  left: 50%;
   top: 245px;
   transform: translate(-50%, 0);
   display: flex;
@@ -657,14 +697,12 @@ main #sidebar .content .tag-wrapper {
     position: absolute;
     transform: translate(-50%, 0);
     left: 55%;
-    top: 160px;
+    top: 240px;
   }
 
-  #modal .main-info {
-    position: absolute;
-    transform: translate(-50%, 0);
-    left: 55%;
-    top: 220px;
+  #modal .main-info .main-info-entry {
+    height: 1em;
+    padding-bottom: 20px;
   }
 
   #modal #modal-name-key {
@@ -674,7 +712,7 @@ main #sidebar .content .tag-wrapper {
   #modal #modal-name-value {
     position: absolute;
     font-size: 16px;
-    top: -210px;
+    top: -230px;
     left: -15px;
   }
 
@@ -692,19 +730,16 @@ main #sidebar .content .tag-wrapper {
   }
 
   #modal .main-info {
-    top: 205px;
-  }
-
-  #modal .main-info .main-info-entry {
-    height: 2em;
+    left: 56%;
+    top: 220px;
   }
 
   #modal #modal-name-value {
-    top: -195px;
+    top: -210px;
     left: 0px;
   }
 
   #modal .content .side-info {
-    top: 295px;
+    top: 300px;
   }
 }
