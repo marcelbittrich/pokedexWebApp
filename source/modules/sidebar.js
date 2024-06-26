@@ -59,6 +59,17 @@ async function populateSidebar() {
 }
 populateSidebar();
 
+// Setup slider and display
+/// Set sound default value
+let masterVolume = 0.25;
+const soundSlider = document.getElementById("soundSlider");
+soundSlider.value = masterVolume * 100;
+soundSlider.oninput = function () {
+  masterVolume = this.value / 100;
+};
+
+export { masterVolume };
+
 function updateSelectedFilterTypes(clickedTagName) {
   if (selectedFilterTypes.includes(clickedTagName)) {
     const index = selectedFilterTypes.findIndex((element) => {

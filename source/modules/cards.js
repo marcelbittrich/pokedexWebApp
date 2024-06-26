@@ -1,6 +1,5 @@
 import { changeVisiblity, firstLetterToUpper } from "../utils";
 import { updateModalCard } from "./modal";
-import { masterVolume } from "../main";
 
 export function createPokemonCard(id, name, imageUrl) {
   let $cardWrapper = $("<div>").addClass("card-wrapper").attr("id", `pc-${id}`);
@@ -34,11 +33,5 @@ export async function updatePokemonCollection(filteredObjects, numOfTotalObj) {
     const pokemonIndex = $(this).attr("id").split("-")[1];
     updateModalCard(filteredObjects[pokemonIndex]);
     changeVisiblity($("#overlay"), true);
-
-    setTimeout(() => {
-      var battleCry = new Audio(filteredObjects[pokemonIndex].cries.latest);
-      battleCry.volume = masterVolume / 4;
-      battleCry.play();
-    }, 100);
   });
 }

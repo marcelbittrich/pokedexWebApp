@@ -1,5 +1,7 @@
 import { changeVisiblity, firstLetterToUpper } from "../utils";
 import { createPokeTypeTagByName } from "./tags";
+import { masterVolume } from "./sidebar";
+//import { masterVolume } from "../main";
 
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
@@ -19,6 +21,11 @@ function setOnClickHandlers() {
   $("#modal").on("click", function (e) {
     e.stopPropagation();
   });
+
+  $("#sound-wrapper").on("click", function () {
+    $("#battle-cry-player").get(0).volume = masterVolume;
+    $("#battle-cry-player").get(0).play();
+  });
 }
 
 function createModal() {
@@ -34,6 +41,16 @@ function createModal() {
     .attr("id", "close-modal-wrapper")
     .text("X")
     .appendTo(modalCardElement);
+
+  const soundElement = $("<div>")
+    .attr("id", "sound-wrapper")
+    .appendTo(modalCardElement);
+  const soundIcon = $("<img>")
+    .attr("src", "../../img/Speaker_Icon.svg")
+    .appendTo(soundElement);
+  const audioElement = $("<audio>")
+    .attr("id", "battle-cry-player")
+    .appendTo(soundElement);
 
   // Content and Image Element
   const contentElement = $("<div>")
@@ -166,6 +183,7 @@ function updateModalCard(pokemon) {
       $(barDivId).css("width", percentage);
     }, 100);
   }
+  $("#battle-cry-player").attr("src", pokemon.cries.latest);
 }
 
 export { createModal, updateModalCard };
