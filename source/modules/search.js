@@ -17,9 +17,9 @@ let baseSearchOptions = {
   // fieldNormWeight: 1,
 };
 
-const nameSearchOptions = {
+const inputSearchOptions = {
   ...baseSearchOptions,
-  keys: ["name"],
+  keys: ["name", "id"],
 };
 
 const gameSearchOptions = {
@@ -47,7 +47,7 @@ export class PokeSearch {
     this._objectsToSearch = objects;
   }
 
-  searchWithFilters(nameSearchInput) {
+  searchWithFilters(searchInput) {
     let objects = [];
 
     // first filter with types
@@ -68,11 +68,11 @@ export class PokeSearch {
       objects = this._objectsToSearch;
     }
 
-    // then filter by name search
-    if (nameSearchInput) {
-      const fuse = new Fuse(objects, nameSearchOptions);
-      let nameSearchResult = fuse.search(nameSearchInput);
-      objects = nameSearchResult.map((element) => element.item);
+    // then filter by input search
+    if (searchInput) {
+      const fuse = new Fuse(objects, inputSearchOptions);
+      let inputSearchResult = fuse.search(searchInput);
+      objects = inputSearchResult.map((element) => element.item);
     }
 
     // then filter by game
