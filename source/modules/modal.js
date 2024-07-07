@@ -1,7 +1,7 @@
 import { changeVisiblity, firstLetterToUpper } from "../utils";
 import { createPokeTypeTagByName } from "./tags";
 import { masterVolume } from "./sidebar";
-//import { masterVolume } from "../main";
+import speakerIconUrl from "../../img/Speaker_Icon.svg?url";
 
 import jQuery from "jquery";
 import { getDataByURL, getMaxPokeCount } from "../data";
@@ -49,7 +49,7 @@ function createModal() {
     .attr("id", "modal-card")
     .appendTo(modalElement);
 
-  // ID and Close Element
+  // ID, Close and Sound Element
   const idElement = $("<div>")
     .attr("id", "pokeId-wrapper")
     .text("#0001")
@@ -64,7 +64,7 @@ function createModal() {
     .attr("id", "sound-wrapper")
     .appendTo(modalCardElement);
   const soundIcon = $("<img>")
-    .attr("src", "../../img/Speaker_Icon.svg")
+    .attr("src", speakerIconUrl)
     .appendTo(soundElement);
   const audioElement = $("<audio>")
     .attr("id", "battle-cry-player")
