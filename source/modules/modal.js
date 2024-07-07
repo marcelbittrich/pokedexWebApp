@@ -4,7 +4,7 @@ import { masterVolume } from "./sidebar";
 //import { masterVolume } from "../main";
 
 import jQuery from "jquery";
-import { getDataByURL } from "../data";
+import { getDataByURL, getMaxPokeCount } from "../data";
 window.$ = window.jQuery = jQuery;
 
 const MAIN_INFO = ["name", "types", "weight"];
@@ -30,7 +30,24 @@ function setOnClickHandlers() {
 }
 
 function createModal() {
-  const modalCardElement = $("<section>").attr("id", "modal");
+  const modalElement = $("<section>").attr("id", "modal");
+  $("#overlay").append(modalElement);
+
+  // Left/Right Buttons
+  const leftButtonElement = $("<div>")
+    .addClass("modal-button")
+    .attr("id", "modal-left-button")
+    .text("<")
+    .appendTo(modalElement);
+  const rightButtonElement = $("<div>")
+    .addClass("modal-button")
+    .attr("id", "modal-right-button")
+    .text(">")
+    .appendTo(modalElement);
+
+  const modalCardElement = $("<section>")
+    .attr("id", "modal-card")
+    .appendTo(modalElement);
 
   // ID and Close Element
   const idElement = $("<div>")
@@ -148,13 +165,58 @@ function createModal() {
       nameIter++;
     });
   });
-
-  $("#overlay").append(modalCardElement);
   setOnClickHandlers();
+}
+
+async function updateModalButtons(pokemon) {
+  const $leftButton = $("#modal-left-button");
+  const $rightButton = $("#modal-right-button");
+  const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+
+  // id gap in data base at the following ids
+  const lastNormalId = 1025;
+  const firstGapId = 10001;
+  const gap = firstGapId - lastNormalId;
+
+  let prevPokeId = pokemon.id - 1;
+  let nextPokeId = pokemon.id + 1;
+
+  if (pokemon.id === lastNormalId) {
+    nextPokeId += gap - 1;
+  } else if (pokemon.id === firstGapId) {
+    prevPokeId -= gap - 1;
+  }
+
+  if (prevPokeId <= 0) {
+    $leftButton.hide();
+  } else {
+    $leftButton
+      .show()
+      .off()
+      .on("click", async function () {
+        const url = baseUrl + prevPokeId + "/";
+        const newPokemon = await getDataByURL(url);
+        await updateModalCard(newPokemon);
+      });
+  }
+
+  if (nextPokeId >= getMaxPokeCount() + gap) {
+    $rightButton.hide();
+  } else {
+    $rightButton
+      .show()
+      .off()
+      .on("click", async function () {
+        const url = baseUrl + nextPokeId + "/";
+        const newPokemon = await getDataByURL(url);
+        await updateModalCard(newPokemon);
+      });
+  }
 }
 
 function updateEvolutionChain(evolutionObjects) {
   const evolutionChainElement = $("#evo-chain-wrapper");
+  $("#evo-chain-wrapper .evo-element").remove();
   evolutionObjects.forEach((object) => {
     const imageUrl = object.sprites.front_default;
     const evoElement = $("<div>")
@@ -180,6 +242,7 @@ async function getEvoData(pokemon) {
   const speciesData = await getDataByURL(pokemon.species.url);
   const evoChainData = await getDataByURL(speciesData.evolution_chain.url);
   const basePokeInfo = evoChainData.chain.species;
+
   let chainArray = [basePokeInfo];
   const allEvoChainPokemon = getEvoChain(
     evoChainData.chain.evolves_to,
@@ -193,17 +256,19 @@ async function getEvoData(pokemon) {
 
   let evoChainPromiseArray = [];
   allEvoChainPokemon.forEach((pokemon) => {
-    const url = `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`;
+    const urlArray = pokemon.url.split("/");
+    const pokemonId = urlArray[urlArray.length - 2];
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`;
     const pokemonData = getDataByURL(url);
     evoChainPromiseArray.push(pokemonData);
   });
 
-  return Promise.all(evoChainPromiseArray);
+  return await Promise.all(evoChainPromiseArray);
 }
 
 async function updateModalCard(pokemon) {
-  // clear prev evolution chain
-  $("#evo-chain-wrapper .evo-element").remove();
+  // Modal Buttons
+  await updateModalButtons(pokemon);
 
   // ID and Picture
   const idText = "#" + pokemon.id.toString().padStart(4, "0");
