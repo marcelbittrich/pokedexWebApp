@@ -73,7 +73,8 @@ async function fetchData(startId, endId) {
     data.results.forEach((pokemon) => {
       promiseArray.push(getDataByURL(pokemon.url));
     });
-    pokemonData = await Promise.all(promiseArray);
+    pokemonData = await Promise.allSettled(promiseArray);
+    pokemonData = pokemonData.map((datum) => datum.value);
     return pokemonData;
   } catch (error) {
     console.log(error);
