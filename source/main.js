@@ -40,7 +40,6 @@ async function requestUpdate(startId, endId) {
   setRequestMax(getMaxPokeCount());
 
   const currentSearchInput = $("#pokeSearch").val();
-
   const pokeSearch = new PokeSearch(
     getSelectedGameFilter(),
     getSelectedTypeFilter(),

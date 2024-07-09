@@ -49,8 +49,16 @@ export async function getDataByURL(url) {
     return cachedPokeData[url];
   }
   console.log("fetched data");
+  if (url === "https://pokeapi.co/api/v2/pokemon/218/") {
+    console.log("slugma");
+  }
   const response = await window.fetch(url);
-  const data = await response.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch (error) {
+    console.log(error);
+  }
 
   cachedPokeData[url] = data;
   return data;
@@ -63,7 +71,7 @@ async function fetchData(startId, endId) {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
     let response = await window.fetch(url);
     let data = await response.json();
-
+    console.log(data);
     // set maxPokeCount to the database limit
     maxPokeCount = data.count;
 
@@ -74,7 +82,11 @@ async function fetchData(startId, endId) {
       promiseArray.push(getDataByURL(pokemon.url));
     });
     pokemonData = await Promise.allSettled(promiseArray);
-    pokemonData = pokemonData.map((datum) => datum.value);
+    console.log(pokemonData);
+    pokemonData = pokemonData
+      .filter((datum) => datum.status === "fulfilled")
+      .map((datum) => datum.value);
+    console.log(pokemonData);
     return pokemonData;
   } catch (error) {
     console.log(error);
