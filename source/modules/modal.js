@@ -4,7 +4,12 @@ import { masterVolume } from "./sidebar";
 import speakerIconUrl from "../../img/Speaker_Icon.svg?url";
 
 import jQuery from "jquery";
-import { getDataByURL, getMaxPokeCount } from "../data";
+import {
+  getDataByURL,
+  getFilteredPokemon,
+  getMaxPokeCount,
+  getPokemonObjects,
+} from "../data";
 window.$ = window.jQuery = jQuery;
 
 const MAIN_INFO = ["name", "types", "weight"];
@@ -171,44 +176,32 @@ function createModal() {
 async function updateModalButtons(pokemon) {
   const $leftButton = $("#modal-left-button");
   const $rightButton = $("#modal-right-button");
-  const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
 
-  // id gap in data base at the following ids
-  const lastNormalId = 1025;
-  const firstGapId = 10001;
-  const gap = firstGapId - lastNormalId;
+  const filteredPokemon = getFilteredPokemon();
+  const pokemonIndex = filteredPokemon.findIndex(
+    (displayedPokemon) => displayedPokemon.id === pokemon.id
+  );
 
-  let prevPokeId = pokemon.id - 1;
-  let nextPokeId = pokemon.id + 1;
-
-  if (pokemon.id === lastNormalId) {
-    nextPokeId += gap - 1;
-  } else if (pokemon.id === firstGapId) {
-    prevPokeId -= gap - 1;
-  }
-
-  if (prevPokeId <= 0) {
+  if (pokemonIndex <= 0) {
     $leftButton.hide();
   } else {
     $leftButton
       .show()
       .off()
       .on("click", async function () {
-        const url = baseUrl + prevPokeId + "/";
-        const newPokemon = await getDataByURL(url);
+        const newPokemon = filteredPokemon[pokemonIndex - 1];
         await updateModalCard(newPokemon);
       });
   }
 
-  if (nextPokeId >= getMaxPokeCount() + gap) {
+  if (pokemonIndex >= filteredPokemon.length - 1) {
     $rightButton.hide();
   } else {
     $rightButton
       .show()
       .off()
       .on("click", async function () {
-        const url = baseUrl + nextPokeId + "/";
-        const newPokemon = await getDataByURL(url);
+        const newPokemon = filteredPokemon[pokemonIndex + 1];
         await updateModalCard(newPokemon);
       });
   }
@@ -263,7 +256,7 @@ async function getEvoData(pokemon) {
     evoChainPromiseArray.push(pokemonData);
   });
 
-  return await Promise.all(evoChainPromiseArray);
+  return await Promise.allSettled(evoChainPromiseArray);
 }
 
 async function updateModalCard(pokemon) {
@@ -311,7 +304,10 @@ async function updateModalCard(pokemon) {
   $("#battle-cry-player").attr("src", pokemon.cries.latest);
 
   // create new evo chain
-  const allEvolutionData = await getEvoData(pokemon);
+  let allEvolutionData = await getEvoData(pokemon);
+  allEvolutionData = allEvolutionData
+    .filter((datum) => datum.status === "fulfilled")
+    .map((datum) => datum.value);
   updateEvolutionChain(allEvolutionData);
 }
 

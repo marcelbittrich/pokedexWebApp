@@ -42,22 +42,27 @@ let maxPokeCount = 0;
 const cachedPokeData = {};
 // currently displayed data
 let pokemonData = [];
+// currently filtered data
+let filteredPokemonData = [];
 
 export async function getDataByURL(url) {
   if (url in cachedPokeData) {
     console.log("used cache");
     return cachedPokeData[url];
   }
-  console.log("fetched data");
-  if (url === "https://pokeapi.co/api/v2/pokemon/218/") {
-    console.log("slugma");
+
+  let response;
+  try {
+    response = await window.fetch(url, { cache: "no-store" });
+  } catch (networkError) {
+    throw `${url} fetch failed with message: ${networkError}`;
   }
-  const response = await window.fetch(url);
+
   let data;
   try {
     data = await response.json();
-  } catch (error) {
-    console.log(error);
+  } catch (jsonError) {
+    throw `${url} JSON failed with message: ${jsonError}`;
   }
 
   cachedPokeData[url] = data;
@@ -71,7 +76,6 @@ async function fetchData(startId, endId) {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
     let response = await window.fetch(url);
     let data = await response.json();
-    console.log(data);
     // set maxPokeCount to the database limit
     maxPokeCount = data.count;
 
@@ -82,11 +86,9 @@ async function fetchData(startId, endId) {
       promiseArray.push(getDataByURL(pokemon.url));
     });
     pokemonData = await Promise.allSettled(promiseArray);
-    console.log(pokemonData);
     pokemonData = pokemonData
       .filter((datum) => datum.status === "fulfilled")
       .map((datum) => datum.value);
-    console.log(pokemonData);
     return pokemonData;
   } catch (error) {
     console.log(error);
@@ -103,4 +105,12 @@ export function getPokemonObjects() {
 
 export function getMaxPokeCount() {
   return maxPokeCount;
+}
+
+export function setFilteredPokemon(array) {
+  filteredPokemonData = array;
+}
+
+export function getFilteredPokemon() {
+  return filteredPokemonData;
 }

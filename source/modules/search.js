@@ -1,5 +1,9 @@
 import Fuse from "fuse.js";
-import { getAllTypeNames } from "../data";
+import {
+  getAllTypeNames,
+  getFilteredPokemon,
+  setFilteredPokemon,
+} from "../data";
 
 let baseSearchOptions = {
   // isCaseSensitive: false,
@@ -81,7 +85,7 @@ export class PokeSearch {
       let gameSearchResult = fuse.search(this._gameFilter);
       objects = gameSearchResult.map((element) => element.item);
     }
-
+    setFilteredPokemon(objects);
     return objects;
   }
 }

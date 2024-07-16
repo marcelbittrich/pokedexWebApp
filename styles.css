@@ -436,6 +436,7 @@ main #sidebar .content .tag-wrapper {
 }
 
 #modal {
+  user-select: none;
   position: fixed;
   background-color: #d9d9d9;
   top: 50%;
