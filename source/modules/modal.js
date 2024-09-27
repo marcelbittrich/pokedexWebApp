@@ -232,10 +232,18 @@ function getEvoChain(evolvesToEntry, chainArray) {
 }
 
 async function getEvoData(pokemon) {
+  console.time("speciesData");
+  console.log(pokemon);
   const speciesData = await getDataByURL(pokemon.species.url);
-  const evoChainData = await getDataByURL(speciesData.evolution_chain.url);
-  const basePokeInfo = evoChainData.chain.species;
+  console.log(speciesData);
+  console.timeEnd("speciesData");
 
+  console.time("evoChainData");
+  const evoChainData = await getDataByURL(speciesData.evolution_chain.url);
+  console.log(evoChainData);
+  console.timeEnd("evoChainData");
+
+  const basePokeInfo = evoChainData.chain.species;
   let chainArray = [basePokeInfo];
   const allEvoChainPokemon = getEvoChain(
     evoChainData.chain.evolves_to,
@@ -304,11 +312,15 @@ async function updateModalCard(pokemon) {
   $("#battle-cry-player").attr("src", pokemon.cries.latest);
 
   // create new evo chain
+  $("#evo-chain-wrapper").hide();
+  console.time("getEvoData");
   let allEvolutionData = await getEvoData(pokemon);
+  console.timeEnd("getEvoData");
   allEvolutionData = allEvolutionData
     .filter((datum) => datum.status === "fulfilled")
     .map((datum) => datum.value);
   updateEvolutionChain(allEvolutionData);
+  $("#evo-chain-wrapper").show();
 }
 
 export { createModal, updateModalCard };
